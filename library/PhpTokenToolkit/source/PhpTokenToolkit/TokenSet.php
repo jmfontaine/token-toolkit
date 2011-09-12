@@ -30,14 +30,14 @@ class TokenSet
         return $result;
     }
 
-    protected function processSourceString($source)
+    protected function processSourceString($source, $eolCharacter = "\n")
     {
         if (!is_string($source)) {
             throw new \InvalidArgumentException('Source must be a string');
         }
 
         $tokenIndex = 0;
-        $tokens = $this->getTokenizer()->getTokens($source);
+        $tokens = $this->getTokenizer()->getTokens($source, $eolCharacter);
         foreach ($tokens as $token) {
             $tokenName    = $this->getTokenizer()->getTokenName($token[0]);
             $tokenClass   = $this->getTokenClass($tokenName);
@@ -54,9 +54,9 @@ class TokenSet
         }
     }
 
-    public function __construct($source)
+    public function __construct($source, $eolCharacter = null)
     {
-        $this->processSourceString($source);
+        $this->processSourceString($source, $eolCharacter);
     }
 
     public function dump()

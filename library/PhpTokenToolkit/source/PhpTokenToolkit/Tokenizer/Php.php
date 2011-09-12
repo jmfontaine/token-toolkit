@@ -36,7 +36,11 @@ if (!defined('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED')) {
 
 class Php
 {
-     protected $simpleCustomTokens = array(
+    const EOL_CHAR_MAC     = "\r";
+    const EOL_CHAR_UNIX    = "\n";
+    const EOL_CHAR_WINDOWS = "\r\n";
+
+    protected $simpleCustomTokens = array(
 		'null'   => T_NULL,
         'false'  => T_FALSE,
         'true'   => T_TRUE,
@@ -98,6 +102,12 @@ class Php
         T_BACKTICK             => 'T_BACKTICK',
     );
 
+    protected $multilineTokens = array(
+        T_CONSTANT_ENCAPSED_STRING,
+        T_OPEN_TAG,
+        T_WHITESPACE,
+    );
+
     public function getTokenName($tokenCode)
     {
         // First try to get the PHP token name
@@ -118,48 +128,56 @@ class Php
         return $tokenName;
     }
 
-    public function getTokens($string)
+    public function getTokens($string, $eolCharacter = "\n")
     {
         // Retrieve raw tokens
         $rawTokens = token_get_all($string);
 
         // Process raw tokens to transform some strings to custom tokens
         $tokens    = array();
-        $tokenLine = 0;
+        $tokenLine = 1;
         foreach ($rawTokens as $rawToken) {
             // We do not reprocess already processed tokens
-            // except if they are strings
+            // except if they are strings.
             if (is_array($rawToken) && T_STRING !== $rawToken[0]) {
-                $tokens[]  = $rawToken;
-                $tokenLine = $rawToken[2];
-                continue;
-            }
-
-            if (is_array($rawToken)) {
-                $tokenContent = $rawToken[1];
-                $tokenLine    = $rawToken[2];
+                $token = array(
+                    $rawToken[0],
+                    $rawToken[1],
+                    $tokenLine,
+                );
             } else {
-                $tokenContent = $rawToken;
-                if (false !== strpos($rawToken, "\n")) {
-                    $tokenLine += substr_count($rawToken, "\n");
+                // T_STRING tokens
+                if (is_array($rawToken)) {
+                    $tokenContent = $rawToken[1];
+                } else {
+                // Raw strings
+                    $tokenContent = $rawToken;
+                }
+
+                // If the token content matchs a custom token then create it ...
+                if (array_key_exists(strtolower($tokenContent), $this->simpleCustomTokens)) {
+                    $token = array(
+                        $this->simpleCustomTokens[$tokenContent],
+                        $tokenContent,
+                        $tokenLine
+                    );
+                } else {
+                // ... else consider it a string.
+                    $token = array(
+                        T_STRING,
+                        $tokenContent,
+                        $tokenLine
+                    );
                 }
             }
 
-            if (array_key_exists(strtolower($tokenContent), $this->simpleCustomTokens)) {
-                $token = array(
-                    $this->simpleCustomTokens[$tokenContent],
-                    $tokenContent,
-                    $tokenLine
-                );
-            } else {
-                $token = array(
-                    T_STRING,
-                    $tokenContent,
-                    $tokenLine
-                );
-            }
-
             $tokens[] = $token;
+
+            // Token line number can only change in tokens that span several
+            // lines.
+            if (in_array($token[0], $this->multilineTokens)) {
+                $tokenLine += substr_count($token[1], $eolCharacter);
+            }
         }
 
         return $tokens;

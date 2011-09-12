@@ -7,32 +7,37 @@ abstract class AbstractPhpToken
 {
     protected $content;
 
+    protected $endLine;
+
     protected $index;
 
     protected $isCustom = false;
 
-    protected $line;
-
     protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
+
+    protected $startLine;
 
     protected $tokenSet;
 
-    public function __construct($index, $content, $line, TokenSet $tokenSet)
+    public function __construct($index, $content, $startLine, $endLine,
+        TokenSet $tokenSet)
     {
-        $this->index    = $index;
-        $this->content  = $content;
-        $this->line     = $line;
-        $this->tokenSet = $tokenSet;
+        $this->index     = $index;
+        $this->content   = $content;
+        $this->startLine = $startLine;
+        $this->endLine   = $endLine;
+        $this->tokenSet  = $tokenSet;
     }
 
     public function dump()
     {
         return sprintf(
-            '%d: %s "%s" (%d)' . PHP_EOL,
+            '%d: %s "%s" (%d-%d)' . PHP_EOL,
             $this->index,
             $this->name,
             $this->content,
-            $this->line
+            $this->startLine,
+            $this->endLine
         );
     }
 
@@ -46,19 +51,24 @@ abstract class AbstractPhpToken
         return $this->content;
     }
 
+    public function getEndLine()
+    {
+        return $this->endLine;
+    }
+
     public function getIndex()
     {
         return $this->index;
     }
 
-    public function getLine()
-    {
-        return $this->line;
-    }
-
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getStartLine()
+    {
+        return $this->startLine;
     }
 
     public function getTokenSet()

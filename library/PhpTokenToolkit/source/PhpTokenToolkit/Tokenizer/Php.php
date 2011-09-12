@@ -134,17 +134,18 @@ class Php
         $rawTokens = token_get_all($string);
 
         // Process raw tokens to transform some strings to custom tokens
-        $tokens    = array();
-        $tokenLine = 1;
+        $tokens         = array();
+        $tokenType      = null;
+        $tokenContent   = '';
+        $tokenStartLine = 1;
+        $tokenEndLine   = 1;
+
         foreach ($rawTokens as $rawToken) {
             // We do not reprocess already processed tokens
             // except if they are strings.
             if (is_array($rawToken) && T_STRING !== $rawToken[0]) {
-                $token = array(
-                    $rawToken[0],
-                    $rawToken[1],
-                    $tokenLine,
-                );
+                $tokenType    = $rawToken[0];
+                $tokenContent = $rawToken[1];
             } else {
                 // T_STRING tokens
                 if (is_array($rawToken)) {
@@ -156,28 +157,29 @@ class Php
 
                 // If the token content matchs a custom token then create it ...
                 if (array_key_exists(strtolower($tokenContent), $this->simpleCustomTokens)) {
-                    $token = array(
-                        $this->simpleCustomTokens[$tokenContent],
-                        $tokenContent,
-                        $tokenLine
-                    );
+                    $tokenType = $this->simpleCustomTokens[$tokenContent];
                 } else {
                 // ... else consider it a string.
-                    $token = array(
-                        T_STRING,
-                        $tokenContent,
-                        $tokenLine
-                    );
+                    $tokenType = T_STRING;
                 }
             }
 
-            $tokens[] = $token;
+            // The token starts on the line the previous token ends
+            $tokenStartLine = $tokenEndLine;
 
             // Token line number can only change in tokens that span several
             // lines.
-            if (in_array($token[0], $this->multilineTokens)) {
-                $tokenLine += substr_count($token[1], $eolCharacter);
+            if (in_array($tokenType, $this->multilineTokens)) {
+                $tokenEndLine += substr_count($tokenContent, $eolCharacter);
             }
+
+            // Finally add the token to the stack
+            $tokens[] = array(
+                $tokenType,
+                $tokenContent,
+                $tokenStartLine,
+                $tokenEndLine,
+            );
         }
 
         return $tokens;

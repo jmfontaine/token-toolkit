@@ -39,15 +39,17 @@ class TokenSet
         $tokenIndex = 0;
         $tokens = $this->getTokenizer()->getTokens($source, $eolCharacter);
         foreach ($tokens as $token) {
-            $tokenName    = $this->getTokenizer()->getTokenName($token[0]);
-            $tokenClass   = $this->getTokenClass($tokenName);
-            $tokenContent = $token[1];
-            $tokenLine    = $token[2];
+            $tokenName      = $this->getTokenizer()->getTokenName($token[0]);
+            $tokenClass     = $this->getTokenClass($tokenName);
+            $tokenContent   = $token[1];
+            $tokenStartLine = $token[2];
+            $tokenEndLine   = $token[3];
 
             $this->tokens[] = new $tokenClass(
                 $tokenIndex,
                 $tokenContent,
-                $tokenLine,
+                $tokenStartLine,
+                $tokenEndLine,
                 $this
             );
             $tokenIndex++;

@@ -103,8 +103,14 @@ class Php
     );
 
     protected $multilineTokens = array(
+        T_CLOSE_TAG,
+        T_COMMENT,
         T_CONSTANT_ENCAPSED_STRING,
+        T_DOC_COMMENT,
+        T_ENCAPSED_AND_WHITESPACE,
+        T_INLINE_HTML,
         T_OPEN_TAG,
+        T_START_HEREDOC,
         T_WHITESPACE,
     );
 
@@ -133,13 +139,15 @@ class Php
         // Retrieve raw tokens
         $rawTokens = token_get_all($string);
 
-        // Process raw tokens to transform some strings to custom tokens
-        $tokens         = array();
-        $tokenType      = null;
-        $tokenContent   = '';
-        $tokenStartLine = 1;
-        $tokenEndLine   = 1;
-
+        $tokens               = array();
+        $tokenType            = null;
+        $tokenContent         = '';
+        $tokenStartLine       = 1;
+        $tokenStartColumn     = 1;
+        $tokenEndLine         = 1;
+        $tokenEndColumn       = 1;
+        $nextTokenStartLine   = 1;
+        $nextTokenStartColumn = 1;
         foreach ($rawTokens as $rawToken) {
             // We do not reprocess already processed tokens
             // except if they are strings.
@@ -157,20 +165,44 @@ class Php
 
                 // If the token content matchs a custom token then create it ...
                 if (array_key_exists(strtolower($tokenContent), $this->simpleCustomTokens)) {
-                    $tokenType = $this->simpleCustomTokens[$tokenContent];
+                    $tokenType = $this->simpleCustomTokens[strtolower($tokenContent)];
                 } else {
-                // ... else consider it a string.
+                // ... else consider it a simple string.
                     $tokenType = T_STRING;
                 }
             }
 
-            // The token starts on the line the previous token ends
-            $tokenStartLine = $tokenEndLine;
-
             // Token line number can only change in tokens that span several
             // lines.
-            if (in_array($tokenType, $this->multilineTokens)) {
-                $tokenEndLine += substr_count($tokenContent, $eolCharacter);
+            if (in_array($tokenType, $this->multilineTokens)
+                && false !== strpos($tokenContent, $eolCharacter))  {
+                $parts         = explode($eolCharacter, $tokenContent);
+                $lastPartIndex = count($parts) - 1;
+
+                $tokenStartLine   = $nextTokenStartLine;
+                $tokenStartColumn = $nextTokenStartColumn;
+
+                // EOL character is the last character of the token content
+                if (0 === strlen($parts[$lastPartIndex])) {
+                    $tokenEndLine   = $tokenStartLine + count($parts) - 2;
+                    $tokenEndColumn = $nextTokenStartColumn + strlen($parts[$lastPartIndex - 1] . $eolCharacter) - 1;
+
+                    $nextTokenStartLine   = $tokenEndLine + 1;
+                    $nextTokenStartColumn = 1;
+                } else {
+                    $tokenEndLine   = $tokenStartLine + count($parts) - 1;
+                    $tokenEndColumn = strlen($parts[$lastPartIndex]);
+
+                    $nextTokenStartLine   = $tokenEndLine;
+                    $nextTokenStartColumn = strlen($parts[$lastPartIndex]) + 1;
+                }
+            } else {
+                $tokenStartLine   = $nextTokenStartLine;
+                $tokenEndLine     = $nextTokenStartLine; // Token is on one line
+                $tokenStartColumn = $nextTokenStartColumn;
+                $tokenEndColumn   = $tokenStartColumn + strlen($tokenContent) - 1;
+
+                $nextTokenStartColumn = $tokenEndColumn + 1;
             }
 
             // Finally add the token to the stack
@@ -178,7 +210,9 @@ class Php
                 $tokenType,
                 $tokenContent,
                 $tokenStartLine,
+                $tokenStartColumn,
                 $tokenEndLine,
+                $tokenEndColumn
             );
         }
 

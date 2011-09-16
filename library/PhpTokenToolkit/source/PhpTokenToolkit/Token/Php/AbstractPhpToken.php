@@ -7,6 +7,8 @@ abstract class AbstractPhpToken
 {
     protected $content;
 
+    protected $endColumn;
+
     protected $endLine;
 
     protected $index;
@@ -15,29 +17,35 @@ abstract class AbstractPhpToken
 
     protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
 
+    protected $startColumn;
+
     protected $startLine;
 
     protected $tokenSet;
 
-    public function __construct($index, $content, $startLine, $endLine,
-        TokenSet $tokenSet)
+    public function __construct($index, $content, $startLine, $startColumn,
+        $endLine, $endColumn, TokenSet $tokenSet)
     {
-        $this->index     = $index;
-        $this->content   = $content;
-        $this->startLine = $startLine;
-        $this->endLine   = $endLine;
-        $this->tokenSet  = $tokenSet;
+        $this->index       = $index;
+        $this->content     = $content;
+        $this->startLine   = $startLine;
+        $this->startColumn = $startColumn;
+        $this->endLine     = $endLine;
+        $this->endColumn   = $endColumn;
+        $this->tokenSet    = $tokenSet;
     }
 
     public function dump()
     {
         return sprintf(
-            '%d: %s "%s" (%d-%d)' . PHP_EOL,
+            '%d: %s "%s" (%d:%d -> %d:%d)' . PHP_EOL,
             $this->index,
             $this->name,
             $this->content,
             $this->startLine,
-            $this->endLine
+            $this->startColumn,
+            $this->endLine,
+            $this->endColumn
         );
     }
 
@@ -49,6 +57,11 @@ abstract class AbstractPhpToken
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function getEndColumn()
+    {
+        return $this->endColumn;
     }
 
     public function getEndLine()
@@ -64,6 +77,11 @@ abstract class AbstractPhpToken
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getStartColumn()
+    {
+        return $this->startColumn;
     }
 
     public function getStartLine()

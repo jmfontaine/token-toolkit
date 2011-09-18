@@ -2,7 +2,7 @@
 namespace PhpTokenToolkit\Dumper;
 
 use PhpTokenToolkit\TokenStack;
-use PhpTokenToolkit\Token\Php\AbstractPhpToken;
+use PhpTokenToolkit\Token\TokenInterface;
 
 class Text implements DumperInterface
 {
@@ -16,7 +16,7 @@ class Text implements DumperInterface
         return $result;
     }
 
-    public function dumpToken(AbstractPhpToken $token)
+    public function dumpToken(TokenInterface $token)
     {
         return sprintf(
             '%d: %s "%s" (%d:%d -> %d:%d)' . PHP_EOL,

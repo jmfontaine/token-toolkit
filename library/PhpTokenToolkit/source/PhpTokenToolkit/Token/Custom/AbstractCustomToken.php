@@ -1,9 +1,9 @@
 <?php
 namespace PhpTokenToolkit\Token\Custom;
 
-use PhpTokenToolkit\Token\Php\AbstractPhpToken;
+use PhpTokenToolkit\Token\AbstractToken;
 
-abstract class AbstractCustomToken extends AbstractPhpToken
+abstract class AbstractCustomToken extends AbstractToken
 {
     protected $isCustom = true;
 }

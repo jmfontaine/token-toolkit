@@ -1,18 +1,9 @@
 <?php
 namespace PhpTokenToolkit\Token\Php;
 
-abstract class AbstractPhpTokenWithScope extends AbstractPhpToken implements Iterator
+use PhpTokenToolkit\Token\AbstractTokenWithScope;
+
+abstract class AbstractPhpTokenWithScope extends AbstractTokenWithScope
 {
-    protected $endToken;
-
-    public function getEndToken()
-    {
-        if (null === $this->endToken) {
-            $tokens = $this->getTokenStack()->getTokens();
-
-            // TODO: Complete this
-        }
-
-        return $this->endToken;
-    }
+    protected $isCustom = false;
 }

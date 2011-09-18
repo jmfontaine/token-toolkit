@@ -2,7 +2,7 @@
 namespace PhpTokenToolkit\Dumper;
 
 use PhpTokenToolkit\TokenStack;
-use PhpTokenToolkit\Token\Php\AbstractPhpToken;
+use PhpTokenToolkit\Token\TokenInterface;
 
 class Php implements DumperInterface
 {
@@ -16,7 +16,7 @@ class Php implements DumperInterface
         return $result;
     }
 
-    public function dumpToken(AbstractPhpToken $token)
+    public function dumpToken(TokenInterface $token)
     {
         return $token->getContent();
     }

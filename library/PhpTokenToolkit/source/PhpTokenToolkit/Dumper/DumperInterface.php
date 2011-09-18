@@ -2,11 +2,11 @@
 namespace PhpTokenToolkit\Dumper;
 
 use PhpTokenToolkit\TokenStack;
-use PhpTokenToolkit\Token\Php\AbstractPhpToken;
+use PhpTokenToolkit\Token\TokenInterface;
 
 interface DumperInterface
 {
     public function dump(TokenStack $tokenStack);
 
-    public function dumpToken(AbstractPhpToken $token);
+    public function dumpToken(TokenInterface $token);
 }

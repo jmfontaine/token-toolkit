@@ -9,7 +9,7 @@ class Text implements DumperInterface
     public function dump(TokenStack $tokenStack)
     {
         $result = '';
-        foreach ($tokenStack->getTokens() as $token) {
+        foreach ($tokenStack as $token) {
             $result .= $this->dumpToken($token);
         }
 

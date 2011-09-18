@@ -4,8 +4,10 @@ namespace PhpTokenToolkit;
 use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
-class TokenStack
+class TokenStack implements \Iterator
 {
+    protected $iteratorCursor = 0;
+
     protected $tokenizer;
 
     protected $tokens = array();
@@ -110,5 +112,33 @@ class TokenStack
     public function getTokens()
     {
         return $this->tokens;
+    }
+
+    /*
+     * Iterator methods
+     */
+    public function current()
+    {
+        return $this->tokens[$this->iteratorCursor];
+    }
+
+    public function key()
+    {
+        return $this->iteratorCursor;
+    }
+
+    public function next()
+    {
+        $this->iteratorCursor++;
+    }
+
+    public function rewind()
+    {
+        $this->iteratorCursor = 0;
+    }
+
+    public function valid()
+    {
+        return array_key_exists($this->iteratorCursor, $this->tokens);
     }
 }

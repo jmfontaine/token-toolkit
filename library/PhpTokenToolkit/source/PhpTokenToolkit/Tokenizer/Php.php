@@ -207,12 +207,12 @@ class Php
 
             // Finally add the token to the stack
             $tokens[] = array(
-                $tokenType,
-                $tokenContent,
-                $tokenStartLine,
-                $tokenStartColumn,
-                $tokenEndLine,
-                $tokenEndColumn
+                'type'        => $tokenType,
+                'content'     => $tokenContent,
+                'startLine'   => $tokenStartLine,
+                'startColumn' => $tokenStartColumn,
+                'endLine'     => $tokenEndLine,
+                'endColumn'   => $tokenEndColumn
             );
         }
 

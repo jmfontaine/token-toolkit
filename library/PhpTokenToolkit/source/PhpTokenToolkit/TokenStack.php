@@ -32,19 +32,19 @@ class TokenStack
         return $eolCharacter;
     }
 
-    protected function getTokenClass($tokenName)
+    protected function getTokenClass($tokenType)
     {
-        if ($this->getTokenizer()->isCustom(constant($tokenName))) {
-            $tokenType = 'Custom';
+        if ($this->getTokenizer()->isCustom(constant($tokenType))) {
+            $subNamespace = 'Custom';
         } else {
-            $tokenType = 'Php';
+            $subNamespace = 'Php';
         }
 
-        $tokenName = substr($tokenName, 2);
-        $tokenName = strtolower($tokenName);
+        $tokenType = substr($tokenType, 2);
+        $tokenType = strtolower($tokenType);
 
-        $result = "PhpTokenToolkit\Token\\$tokenType\\";
-        foreach (explode('_', $tokenName) as $word) {
+        $result = "PhpTokenToolkit\Token\\$subNamespace\\";
+        foreach (explode('_', $tokenType) as $word) {
             $result .= ucfirst($word);
         }
         $result .= 'Token';
@@ -66,24 +66,18 @@ class TokenStack
             throw new \InvalidArgumentException('Source must be a string');
         }
 
-        $tokenIndex = 0;
         $tokens = $this->getTokenizer()->getTokens($source, $eolCharacter);
-        foreach ($tokens as $token) {
-            $tokenName        = $this->getTokenizer()->getTokenName($token[0]);
-            $tokenClass       = $this->getTokenClass($tokenName);
-            $tokenContent     = $token[1];
-            $tokenStartLine   = $token[2];
-            $tokenStartColumn = $token[3];
-            $tokenEndLine     = $token[4];
-            $tokenEndColumn   = $token[5];
+        foreach ($tokens as $tokenIndex => $token) {
+            $tokenType  = $this->getTokenizer()->getTokenName($token['type']);
+            $tokenClass = $this->getTokenClass($tokenType);
 
             $this->tokens[] = new $tokenClass(
                 $tokenIndex,
-                $tokenContent,
-                $tokenStartLine,
-                $tokenStartColumn,
-                $tokenEndLine,
-                $tokenEndColumn,
+                $token['content'],
+                $token['startLine'],
+                $token['startColumn'],
+                $token['endLine'],
+                $token['endColumn'],
                 $this
             );
             $tokenIndex++;

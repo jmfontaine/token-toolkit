@@ -35,7 +35,7 @@ abstract class AbstractPhpToken
         $this->tokenStack  = $tokenStack;
     }
 
-    public function getCode()
+    public function getType()
     {
         return constant($this->name);
     }

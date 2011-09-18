@@ -35,20 +35,6 @@ abstract class AbstractPhpToken
         $this->tokenSet    = $tokenSet;
     }
 
-    public function dump()
-    {
-        return sprintf(
-            '%d: %s "%s" (%d:%d -> %d:%d)' . PHP_EOL,
-            $this->index,
-            $this->name,
-            $this->content,
-            $this->startLine,
-            $this->startColumn,
-            $this->endLine,
-            $this->endColumn
-        );
-    }
-
     public function getCode()
     {
         return constant($this->name);

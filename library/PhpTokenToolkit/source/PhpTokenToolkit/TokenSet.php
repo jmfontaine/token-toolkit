@@ -99,16 +99,6 @@ class TokenSet
         }
     }
 
-    public function dump()
-    {
-        $dump = '';
-        foreach ($this->tokens as $token) {
-            $dump .= $token->dump();
-        }
-
-        return $dump;
-    }
-
     public function getTokenName(AbstractBaseToken $token)
     {
         return $this->getTokenizer()->getTokenName($token->getCode());

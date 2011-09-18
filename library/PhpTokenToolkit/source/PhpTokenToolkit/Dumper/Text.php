@@ -1,15 +1,15 @@
 <?php
 namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\TokenSet;
+use PhpTokenToolkit\TokenStack;
 use PhpTokenToolkit\Token\Php\AbstractPhpToken;
 
 class Text implements DumperInterface
 {
-    public function dump(TokenSet $tokenSet)
+    public function dump(TokenStack $tokenStack)
     {
         $result = '';
-        foreach ($tokenSet->getTokens() as $token) {
+        foreach ($tokenStack->getTokens() as $token) {
             $result .= $this->dumpToken($token);
         }
 

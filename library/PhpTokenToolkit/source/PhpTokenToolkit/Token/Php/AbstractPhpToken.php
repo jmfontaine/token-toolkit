@@ -1,7 +1,7 @@
 <?php
 namespace PhpTokenToolkit\Token\Php;
 
-use PhpTokenToolkit\TokenSet;
+use PhpTokenToolkit\TokenStack;
 
 abstract class AbstractPhpToken
 {
@@ -21,10 +21,10 @@ abstract class AbstractPhpToken
 
     protected $startLine;
 
-    protected $tokenSet;
+    protected $tokenStack;
 
     public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, TokenSet $tokenSet)
+        $endLine, $endColumn, TokenStack $tokenStack)
     {
         $this->index       = $index;
         $this->content     = $content;
@@ -32,7 +32,7 @@ abstract class AbstractPhpToken
         $this->startColumn = $startColumn;
         $this->endLine     = $endLine;
         $this->endColumn   = $endColumn;
-        $this->tokenSet    = $tokenSet;
+        $this->tokenStack  = $tokenStack;
     }
 
     public function getCode()
@@ -75,9 +75,9 @@ abstract class AbstractPhpToken
         return $this->startLine;
     }
 
-    public function getTokenSet()
+    public function getTokenStack()
     {
-        return $this->tokenSet;
+        return $this->tokenStack;
     }
 
     public function isCustom()

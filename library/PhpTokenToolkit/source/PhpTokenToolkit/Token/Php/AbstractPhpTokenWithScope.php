@@ -8,7 +8,7 @@ abstract class AbstractPhpTokenWithScope extends AbstractPhpToken implements Ite
     public function getEndToken()
     {
         if (null === $this->endToken) {
-            $tokens = $this->getTokenSet()->getTokens();
+            $tokens = $this->getTokenStack()->getTokens();
 
             // TODO: Complete this
         }

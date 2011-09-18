@@ -4,7 +4,7 @@ namespace PhpTokenToolkit;
 use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
-class TokenSet
+class TokenStack
 {
     protected $tokenizer;
 

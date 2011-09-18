@@ -1,12 +1,12 @@
 <?php
 namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\TokenSet;
+use PhpTokenToolkit\TokenStack;
 use PhpTokenToolkit\Token\Php\AbstractPhpToken;
 
 interface DumperInterface
 {
-    public function dump(TokenSet $tokenSet);
+    public function dump(TokenStack $tokenStack);
 
     public function dumpToken(AbstractPhpToken $token);
 }

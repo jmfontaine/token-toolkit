@@ -36,7 +36,7 @@ namespace PhpTokenToolkit;
 use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
-class TokenStack implements \Iterator
+class TokenStack implements \SeekableIterator
 /**
  * Stack of PHP tokens for a string
  *
@@ -180,5 +180,23 @@ class TokenStack implements \Iterator
     public function valid()
     {
         return array_key_exists($this->iteratorCursor, $this->tokens);
+    }
+
+    /*
+     * SeekableIterator method
+     */
+
+    /**
+     * (non-PHPdoc)
+     * @see SeekableIterator::seek()
+     */
+    public function seek($position) {
+      $this->iteratorCursor = $position;
+
+      if (!$this->valid()) {
+          throw new \OutOfBoundsException("Invalid seek position ($position)");
+      }
+
+      return $this;
     }
 }

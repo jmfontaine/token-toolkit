@@ -33,6 +33,9 @@
 
 namespace PhpTokenToolkit;
 
+use PhpTokenToolkit\Token\TokenInterface;
+
+use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
@@ -47,6 +50,8 @@ class TokenStack implements \SeekableIterator
  */
 {
     protected $iteratorCursor = 0;
+
+    protected $searchQuery;
 
     protected $tokenizer;
 
@@ -94,6 +99,15 @@ class TokenStack implements \SeekableIterator
         return $result;
     }
 
+    protected function getSearchQuery()
+    {
+        if (null === $this->searchQuery) {
+            $this->searchQuery = new SearchQuery($this);
+        }
+
+        return $this->searchQuery;
+    }
+
     protected function processSourceFile($source)
     {
         $content      = file_get_contents($source);
@@ -124,6 +138,9 @@ class TokenStack implements \SeekableIterator
             );
             $tokenIndex++;
         }
+
+        // Let search query know that the token stack has been updated
+        $this->getSearchQuery()->setTokenStack($this);
     }
 
     public function __construct($source, $eolCharacter = null)
@@ -152,6 +169,11 @@ class TokenStack implements \SeekableIterator
     public function getTokens()
     {
         return $this->tokens;
+    }
+
+    public function search(array $criterias, $limit = null)
+    {
+        return $this->searchQuery->search($criterias, $limit);
     }
 
     /*

@@ -46,6 +46,8 @@ use PhpTokenToolkit\TokenStack;
  */
 class File
 {
+    protected $eolCharacter;
+
     protected $filename;
 
     protected $tokenStack;
@@ -60,6 +62,33 @@ class File
         return $this->filename;
     }
 
+    public function getEolCharacter()
+    {
+        if (null === $this->eolCharacter) {
+            $handle = fopen($this->filename, 'r');
+            if (false === $handle) {
+                throw new \InvalidArgumentException(
+                	"File $this->filename is not readable"
+            	);
+            }
+
+            $firstLine = fgets($handle);
+            fclose($handle);
+
+            $this->eolCharacter = substr($firstLine, -1);
+            if ("\n" === $this->eolCharacter) {
+                $secondLastCharacter = substr($firstLine, -2, 1);
+                if ("\r" === $secondLastCharacter) {
+                    $this->eolCharacter = "\r\n";
+                }
+            } elseif ("\r" !== $this->eolCharacter) {
+                $this->eolCharacter = "\n";
+            }
+        }
+
+        return $this->eolCharacter;
+    }
+
     public function getSource()
     {
         $source = file_get_contents($this->filename);
@@ -71,7 +100,8 @@ class File
     {
         if (null === $this->tokenStack) {
             $this->tokenStack = new TokenStack(
-                $this->getSource()
+                $this->getSource(),
+                $this->getEolCharacter()
             );
         }
 

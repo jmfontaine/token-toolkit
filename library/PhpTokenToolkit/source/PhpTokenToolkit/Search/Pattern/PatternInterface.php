@@ -26,18 +26,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Search
+ * @subpackage Search/Pattern
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\Search;
+namespace PhpTokenToolkit\Search\Pattern;
 
-use PhpTokenToolkit\Search\Result;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Set of results for a token search
+ *
  *
  * @package PHP Token Toolkit
  * @subpackage Search
@@ -45,68 +45,13 @@ use PhpTokenToolkit\Search\Result;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ResultSet implements \SeekableIterator, \Countable
+interface PatternInterface
 {
-    protected $iteratorCursor = 0;
-
-    protected $results = array();
-
-    public function add(Result $result)
-    {
-        $this->results[] = $result;
-    }
-
-    /*
-     * Iterator methods
-     */
-    public function current()
-    {
-        return $this->results[$this->iteratorCursor];
-    }
-
-    public function key()
-    {
-        return $this->iteratorCursor;
-    }
-
-    public function next()
-    {
-        $this->iteratorCursor++;
-    }
-
-    public function rewind()
-    {
-        $this->iteratorCursor = 0;
-    }
-
-    public function valid()
-    {
-        return array_key_exists($this->iteratorCursor, $this->results);
-    }
-
-    /*
-     * SeekableIterator method
-     */
-
     /**
-     * (non-PHPdoc)
-     * @see SeekableIterator::seek()
+     * Checks if a token matches search pattern
+     *
+     * @param TokenInterface $token Token to check
+     * @return bool True if token matches search pattern, false otherwise
      */
-    public function seek($position) {
-      $this->iteratorCursor = $position;
-
-      if (!$this->valid()) {
-          throw new \OutOfBoundsException("Invalid seek position ($position)");
-      }
-
-      return $this;
-    }
-
-    /*
-     * Countable iterator methods
-     */
-    public function count()
-    {
-        return count($this->results);
-    }
+    public function match(TokenInterface $token);
 }

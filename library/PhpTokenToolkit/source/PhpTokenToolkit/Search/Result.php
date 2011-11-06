@@ -34,10 +34,10 @@
 
 namespace PhpTokenToolkit\Search;
 
-use PhpTokenToolkit\Search\Result;
+use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Set of results for a token search
  *
  * @package PHP Token Toolkit
  * @subpackage Search
@@ -45,68 +45,25 @@ use PhpTokenToolkit\Search\Result;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ResultSet implements \SeekableIterator, \Countable
+class Result
 {
-    protected $iteratorCursor = 0;
+    protected $searchPattern;
 
-    protected $results = array();
+    protected $token;
 
-    public function add(Result $result)
+    public function __construct(TokenInterface $token, SearchPatternInterface $searchPattern)
     {
-        $this->results[] = $result;
+        $this->searchPattern = $searchPattern;
+        $this->token         = $token;
     }
 
-    /*
-     * Iterator methods
-     */
-    public function current()
+    public function getSearchPattern()
     {
-        return $this->results[$this->iteratorCursor];
+        return $this->searchPattern;
     }
 
-    public function key()
+    public function getToken()
     {
-        return $this->iteratorCursor;
-    }
-
-    public function next()
-    {
-        $this->iteratorCursor++;
-    }
-
-    public function rewind()
-    {
-        $this->iteratorCursor = 0;
-    }
-
-    public function valid()
-    {
-        return array_key_exists($this->iteratorCursor, $this->results);
-    }
-
-    /*
-     * SeekableIterator method
-     */
-
-    /**
-     * (non-PHPdoc)
-     * @see SeekableIterator::seek()
-     */
-    public function seek($position) {
-      $this->iteratorCursor = $position;
-
-      if (!$this->valid()) {
-          throw new \OutOfBoundsException("Invalid seek position ($position)");
-      }
-
-      return $this;
-    }
-
-    /*
-     * Countable iterator methods
-     */
-    public function count()
-    {
-        return count($this->results);
+        return $this->token;
     }
 }

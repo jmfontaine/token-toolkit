@@ -34,6 +34,7 @@
 
 namespace PhpTokenToolkit\Search;
 
+use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;
 
@@ -48,56 +49,19 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 class Query
 {
+    protected $searchPatterns = array();
+
     protected $tokenStack;
 
-    protected $type;
-
-    protected function tokenMatchesSearchQuery(array $criterias,
-        TokenInterface $token)
+    public function __construct(TokenStack $tokenStack, $searchPatterns = array())
     {
-        $match = true;
-
-        foreach ($criterias as $name => $value) {
-            switch ($name) {
-                case 'content':
-                    $match = $value === $token->getContent();
-                    break;
-
-                case 'end':
-                    $match = $value >= $token->getIndex();
-                    break;
-
-                case 'regex':
-                    $match = 1 === preg_match($value, $token->getContent());
-                    break;
-
-                case 'start':
-                    $match = $value <= $token->getIndex();
-                    break;
-
-                case 'type':
-                    $match = in_array($token->getType(), (array) $value);
-                    break;
-
-                default:
-                    throw new \InvalidArgumentException(
-                    	"Unknown criteria ($name)"
-                    );
-            }
-
-            // If a criteria does not mached then this token is not
-            // what we are looking for
-            if (false === $match) {
-                break;
-            }
-        }
-
-        return $match;
+        $this->searchPatterns = $searchPatterns;
+        $this->tokenStack     = $tokenStack;
     }
 
-    public function __construct(TokenStack $tokenStack)
+    public function addSearchPattern(SearchPatternInterface $searchPattern)
     {
-        $this->tokenStack = $tokenStack;
+        $this->searchPatterns[] = $searchPattern;
     }
 
     public function getTokenStack()
@@ -105,18 +69,15 @@ class Query
         return $this->tokenStack;
     }
 
-    public function search($criterias, $limit = null)
+    public function search()
     {
         $resultSet = new ResultSet();
 
         reset($this->tokenStack);
         foreach ($this->tokenStack as $token) {
-            if ($this->tokenMatchesSearchQuery($criterias, $token)) {
-                $resultSet->add($token);
-
-                // Stop if we have enough results
-                if (null !== $limit && count($resultSet) >= $limit) {
-                    break;
+            foreach ($this->searchPatterns as $pattern) {
+                if ($pattern->match($token)) {
+                    $resultSet->add(new Result($token, $pattern));
                 }
             }
         }

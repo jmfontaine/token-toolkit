@@ -33,6 +33,7 @@
 
 namespace PhpTokenToolkit\File;
 
+use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\TokenStack;
 
 /**
@@ -106,5 +107,12 @@ class File
         }
 
         return $this->tokenStack;
+    }
+
+    public function search(array $searchPatterns)
+    {
+        $searchQuery = new SearchQuery($this->getTokenStack(), $searchPatterns);
+
+        return $searchQuery->search();
     }
 }

@@ -49,27 +49,22 @@ class File
 {
     protected $eolCharacter;
 
-    protected $filename;
+    protected $path;
 
     protected $tokenStack;
 
-    public function __construct($filename)
+    public function __construct($path)
     {
-        $this->filename = $filename;
-    }
-
-    public function getFilename()
-    {
-        return $this->filename;
+        $this->path = $path;
     }
 
     public function getEolCharacter()
     {
         if (null === $this->eolCharacter) {
-            $handle = fopen($this->filename, 'r');
+            $handle = fopen($this->path, 'r');
             if (false === $handle) {
                 throw new \InvalidArgumentException(
-                	"File $this->filename is not readable"
+                	"File $this->path is not readable"
             	);
             }
 
@@ -90,9 +85,14 @@ class File
         return $this->eolCharacter;
     }
 
+    public function getPath()
+    {
+        return $this->path;
+    }
+
     public function getSource()
     {
-        $source = file_get_contents($this->filename);
+        $source = file_get_contents($this->path);
 
         return $source;
     }
@@ -101,7 +101,7 @@ class File
     {
         if (null === $this->tokenStack) {
             $this->tokenStack = new TokenStack(
-                $this->getSource(),
+                $this,
                 $this->getEolCharacter()
             );
         }
@@ -111,7 +111,7 @@ class File
 
     public function search(array $searchPatterns)
     {
-        $searchQuery = new SearchQuery($this->getTokenStack(), $searchPatterns);
+        $searchQuery = new SearchQuery($this->getTokenStack(), $searchPatterns, $this);
 
         return $searchQuery->search();
     }

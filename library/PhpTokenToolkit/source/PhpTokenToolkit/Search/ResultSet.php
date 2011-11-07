@@ -56,12 +56,25 @@ class ResultSet implements \SeekableIterator, \Countable
         $this->results[] = $result;
     }
 
+    public function merge(ResultSet $resultSet)
+    {
+        $results = array_merge($this->getResults(), $resultSet->getResults());
+        $this->setResults($results);
+
+        return $this;
+    }
+
     /*
      * Iterator methods
      */
     public function current()
     {
         return $this->results[$this->iteratorCursor];
+    }
+
+    public function getResults()
+    {
+        return $this->results;
     }
 
     public function key()
@@ -77,6 +90,17 @@ class ResultSet implements \SeekableIterator, \Countable
     public function rewind()
     {
         $this->iteratorCursor = 0;
+    }
+
+    public function setResults(array $results)
+    {
+        $this->results = array();
+
+        foreach ($results as $result) {
+            $this->add($result);
+        }
+
+        return $this;
     }
 
     public function valid()

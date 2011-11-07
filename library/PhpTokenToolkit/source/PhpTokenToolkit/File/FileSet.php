@@ -34,6 +34,7 @@ namespace PhpTokenToolkit\File;
 
 use PhpTokenToolkit\File\Iterator\ExcludeFilterIterator;
 use PhpTokenToolkit\File\Iterator\FileIterator;
+use PhpTokenToolkit\Search\ResultSet;
 
 /**
  * Set of PHP files representation
@@ -96,6 +97,19 @@ class FileSet implements \IteratorAggregate
         $this->exclude[] = $pattern;
 
         return $this;
+    }
+
+    public function search(array $searchPatterns)
+    {
+        $resultSet = new ResultSet();
+
+        foreach ($this as $file) {
+            $resultSet->merge(
+                $file->search($searchPatterns)
+            );
+        }
+
+        return $resultSet;
     }
 
     public function setPath($path)

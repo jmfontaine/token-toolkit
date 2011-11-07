@@ -47,6 +47,8 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 class Result
 {
+    protected $file;
+
     protected $searchPattern;
 
     protected $token;

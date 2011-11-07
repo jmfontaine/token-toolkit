@@ -33,10 +33,9 @@
 
 namespace PhpTokenToolkit;
 
-use PhpTokenToolkit\Token\TokenInterface;
-
-use PhpTokenToolkit\Search\Query as SearchQuery;
+use PhpTokenToolkit\File\File;
 use PhpTokenToolkit\Token\AbstractToken;
+use PhpTokenToolkit\Token\TokenInterface;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
 class TokenStack implements \SeekableIterator
@@ -49,35 +48,13 @@ class TokenStack implements \SeekableIterator
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 {
-    protected $iteratorCursor = 0;
+    protected $file;
 
-    protected $searchQuery;
+    protected $iteratorCursor = 0;
 
     protected $tokenizer;
 
     protected $tokens = array();
-
-    protected function detectFileEolCharacter($filePath)
-    {
-        $handle = fopen($filePath, 'r');
-        $firstLine = fgets($handle);
-        fclose($handle);
-
-        $eolCharacter = substr($firstLine, -1);
-        if ($eolCharacter === "\n") {
-            $secondLastCharacter = substr($firstLine, -2, 1);
-            if ($secondLastCharacter === "\r") {
-                $eolCharacter = "\r\n";
-            }
-        } else if ($eolCharacter !== "\r") {
-            // Must not be an EOL char at the end of the line.
-            // Probably a one-line file, so assume \n as it really
-            // doesn't matter considering there are no newlines.
-            $eolCharacter = "\n";
-        }
-
-        return $eolCharacter;
-    }
 
     protected function getTokenClass($tokenType)
     {
@@ -99,19 +76,10 @@ class TokenStack implements \SeekableIterator
         return $result;
     }
 
-    protected function getSearchQuery()
+    protected function processSourceFile(File $file)
     {
-        if (null === $this->searchQuery) {
-            $this->searchQuery = new SearchQuery($this);
-        }
-
-        return $this->searchQuery;
-    }
-
-    protected function processSourceFile($source)
-    {
-        $content      = file_get_contents($source);
-        $eolCharacter = $this->detectFileEolCharacter($source);
+        $content      = $file->getSource() ;
+        $eolCharacter = $file->getEolCharacter();
 
         return $this->processSourceString($content, $eolCharacter);
     }
@@ -138,18 +106,21 @@ class TokenStack implements \SeekableIterator
             );
             $tokenIndex++;
         }
-
-        // Let search query know that the token stack has been updated
-        $this->getSearchQuery()->setTokenStack($this);
     }
 
     public function __construct($source, $eolCharacter = null)
     {
-        if (file_exists($source)) {
+        if ($source instanceof File) {
+            $this->file = $source;
             $this->processSourceFile($source);
         } else {
             $this->processSourceString($source, $eolCharacter);
         }
+    }
+
+    public function getFile()
+    {
+        return $this->file;
     }
 
     public function getTokenName(AbstractBaseToken $token)
@@ -169,11 +140,6 @@ class TokenStack implements \SeekableIterator
     public function getTokens()
     {
         return $this->tokens;
-    }
-
-    public function search(array $criterias, $limit = null)
-    {
-        return $this->searchQuery->search($criterias, $limit);
     }
 
     /*

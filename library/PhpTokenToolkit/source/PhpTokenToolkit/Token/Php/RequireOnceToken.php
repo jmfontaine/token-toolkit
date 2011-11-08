@@ -42,7 +42,7 @@ namespace PhpTokenToolkit\Token\Php;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class RequireOnceToken extends AbstractPhpToken
+class RequireOnceToken extends RequireToken
 {
     protected $name = 'T_REQUIRE_ONCE';
 }

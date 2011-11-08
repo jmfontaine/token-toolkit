@@ -42,7 +42,7 @@ namespace PhpTokenToolkit\Token\Php;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class IncludeToken extends AbstractPhpToken
+class IncludeToken extends RequireToken
 {
     protected $name = 'T_INCLUDE';
 }

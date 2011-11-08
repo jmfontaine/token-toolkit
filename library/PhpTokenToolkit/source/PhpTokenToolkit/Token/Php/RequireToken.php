@@ -33,6 +33,9 @@
  */
 namespace PhpTokenToolkit\Token\Php;
 
+use PhpTokenToolkit\Search\Pattern\CustomPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
+
 /**
  * Class representing a T_REQUIRE token
  *
@@ -44,5 +47,25 @@ namespace PhpTokenToolkit\Token\Php;
  */
 class RequireToken extends AbstractPhpToken
 {
+    protected $filePath;
+
     protected $name = 'T_REQUIRE';
+
+    /**
+     * @todo Be smarter and handle paths in variables, constants and concatanated strings
+     */
+    public function getFilePath()
+    {
+        if (null === $this->filePath) {
+            $token = $this->getTokenStack()
+                          ->findNextTokenByType(T_CONSTANT_ENCAPSED_STRING, $this->getIndex());
+
+            if (false !== $token) {
+                // Remove enclosing quotes before storing
+                $this->filePath = substr($token->getContent(), 1, -1);
+            }
+        }
+
+        return $this->filePath;
+    }
 }

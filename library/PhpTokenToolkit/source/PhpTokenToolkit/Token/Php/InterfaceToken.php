@@ -33,6 +33,9 @@
  */
 namespace PhpTokenToolkit\Token\Php;
 
+use PhpTokenToolkit\Search\Pattern\CustomPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
+
 /**
  * Class representing a T_INTERFACE token
  *
@@ -45,4 +48,20 @@ namespace PhpTokenToolkit\Token\Php;
 class InterfaceToken extends AbstractPhpToken
 {
     protected $name = 'T_INTERFACE';
+
+    protected $interfaceName;
+
+    public function getInterfaceName()
+    {
+        if (null === $this->interfaceName) {
+            $token = $this->getTokenStack()
+                          ->findNextTokenByType(T_STRING, $this->getIndex());
+
+            if (false !== $token) {
+                $this->interfaceName = $token->getContent();
+            }
+        }
+
+        return $this->interfaceName;
+    }
 }

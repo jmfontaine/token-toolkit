@@ -38,7 +38,7 @@ use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Token\TokenInterface;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
-class TokenStack implements \SeekableIterator
+class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 /**
  * Stack of PHP tokens for a string
  *
@@ -143,7 +143,39 @@ class TokenStack implements \SeekableIterator
     }
 
     /*
-     * Iterator methods
+     * ArrayAccess interface methods
+    */
+
+    public function offsetExists($offset)
+    {
+        return isset($this->tokens[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->tokens[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->tokens[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->tokens[$offset]);
+    }
+
+    /*
+     * Countable interface methods
+     */
+    public function count()
+    {
+        return count($this->tokens);
+    }
+
+    /*
+     * Iterator interface methods
      */
     public function current()
     {
@@ -171,7 +203,7 @@ class TokenStack implements \SeekableIterator
     }
 
     /*
-     * SeekableIterator method
+     * SeekableIterator interface method
      */
 
     /**

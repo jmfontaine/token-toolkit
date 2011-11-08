@@ -45,7 +45,7 @@ use PhpTokenToolkit\Search\Result;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ResultSet implements \SeekableIterator, \Countable
+class ResultSet implements \ArrayAccess, \Countable, \SeekableIterator
 {
     protected $iteratorCursor = 0;
 
@@ -109,7 +109,31 @@ class ResultSet implements \SeekableIterator, \Countable
     }
 
     /*
-     * SeekableIterator method
+     * ArrayAccess interface methods
+     */
+
+    public function offsetExists($offset)
+    {
+        return isset($this->results[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->results[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->results[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->results[$offset]);
+    }
+
+    /*
+     * SeekableIterator interface method
      */
 
     /**
@@ -127,7 +151,7 @@ class ResultSet implements \SeekableIterator, \Countable
     }
 
     /*
-     * Countable iterator methods
+     * Countable interface methods
      */
     public function count()
     {

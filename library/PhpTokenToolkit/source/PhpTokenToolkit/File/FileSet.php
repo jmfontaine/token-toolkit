@@ -34,6 +34,7 @@ namespace PhpTokenToolkit\File;
 
 use PhpTokenToolkit\File\Iterator\ExcludeFilterIterator;
 use PhpTokenToolkit\File\Iterator\FileIterator;
+use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Search\ResultSet;
 
 /**
@@ -99,13 +100,13 @@ class FileSet implements \IteratorAggregate
         return $this;
     }
 
-    public function search(array $searchPatterns)
+    public function search(array $searchPatterns, $direction = SearchQuery::FORWARD)
     {
         $resultSet = new ResultSet();
 
         foreach ($this as $file) {
             $resultSet->merge(
-                $file->search($searchPatterns)
+                $file->search($searchPatterns, $direction)
             );
         }
 

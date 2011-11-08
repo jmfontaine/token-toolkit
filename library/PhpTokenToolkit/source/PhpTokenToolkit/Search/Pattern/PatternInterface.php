@@ -48,6 +48,13 @@ use PhpTokenToolkit\Token\TokenInterface;
 interface PatternInterface
 {
     /**
+     * Returns search pattern name
+     *
+     * @return string Search pattern name
+     */
+    public function getName();
+
+    /**
      * Checks if a token matches search pattern
      *
      * @param TokenInterface $token Token to check

@@ -34,6 +34,8 @@
 namespace PhpTokenToolkit;
 
 use PhpTokenToolkit\File\File;
+use PhpTokenToolkit\Search\Pattern\CustomPattern as CustomSearchPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Token\TokenInterface;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
@@ -115,6 +117,34 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
             $this->processSourceFile($source);
         } else {
             $this->processSourceString($source, $eolCharacter);
+        }
+    }
+
+    public function findNextTokenByType($type, $startIndex = null)
+    {
+        // Make sure we get an array in the end
+        $types = (array) $type;
+
+        $pattern = new CustomSearchPattern();
+
+        if (null !== $startIndex) {
+            $pattern->setStartIndex($startIndex);
+        }
+
+        foreach ($types as $type) {
+            $pattern->addTokenType($type);
+        }
+
+        $query     = new SearchQuery($this);
+        $resultSet = $query->addSearchPattern($pattern)
+                           ->setLimit(1)
+                           ->setDirection(SearchQuery::FORWARD)
+                           ->search();
+
+        if (0 < count($resultSet)) {
+            return $resultSet[0]->getToken();
+        } else {
+           return false;
         }
     }
 

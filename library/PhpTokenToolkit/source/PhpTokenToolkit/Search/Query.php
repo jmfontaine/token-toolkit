@@ -49,6 +49,13 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 class Query
 {
+    const BACKWARD = -1;
+    const FORWARD  = 1;
+
+    protected $direction = self::FORWARD;
+
+    protected $limit;
+
     protected $searchPatterns = array();
 
     protected $tokenStack;
@@ -62,6 +69,13 @@ class Query
     public function addSearchPattern(SearchPatternInterface $searchPattern)
     {
         $this->searchPatterns[] = $searchPattern;
+
+        return $this;
+    }
+
+    public function getDirection()
+    {
+        return $this->direction;
     }
 
     public function getTokenStack()
@@ -73,20 +87,84 @@ class Query
     {
         $resultSet = new ResultSet();
 
+        $resultsCount = 0;
+        $tokensCount  = count($this->getTokenStack());
+        if (self::FORWARD === $this->direction) {
+            $startIndex = 0;
+            $endIndex   = $tokensCount - 1;
+        } else {
+            $startIndex = $tokensCount - 1;
+            $endIndex   = 0;
+        }
+
+        for ($i = $startIndex; ;) {
+            $token = $this->tokenStack[$i];
+
+            foreach ($this->searchPatterns as $pattern) {
+                if ($pattern->match($token, $this->direction)) {
+                    $resultSet->add(new Result($token, $pattern));
+                    $resultsCount++;
+
+                    // Stop if we have enough results
+                    if (null !== $this->limit && $resultsCount >= $this->limit) {
+                        break 2;
+                    }
+                }
+            }
+
+            // Handle end of loop and incrementation/decrementation
+            if (self::FORWARD === $this->direction) {
+                if ($i >= $endIndex) {
+                    break;
+                } else {
+                    $i++;
+                }
+            } else {
+                if ($i <= $endIndex) {
+                    break;
+                } else {
+                    $i--;
+                }
+            }
+        }
+
+
+        /*$count = 0;
         reset($this->tokenStack);
         foreach ($this->tokenStack as $token) {
             foreach ($this->searchPatterns as $pattern) {
                 if ($pattern->match($token)) {
                     $resultSet->add(new Result($token, $pattern));
+                    $count++;
+
+                    if (null !== $this->limit && $count >= $this->limit) {
+                        break 2;
+                    }
                 }
             }
-        }
+        }*/
 
         return $resultSet;
+    }
+
+    public function setDirection($direction)
+    {
+        $this->direction = $direction;
+
+        return $this;
+    }
+
+    public function setLimit($limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
     }
 
     public function setTokenStack(TokenStack $tokenStack)
     {
         $this->tokenStack = $tokenStack;
+
+        return $this;
     }
 }

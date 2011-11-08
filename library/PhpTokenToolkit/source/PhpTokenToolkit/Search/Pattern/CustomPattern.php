@@ -34,9 +34,6 @@
 
 namespace PhpTokenToolkit\Search\Pattern;
 
-use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
-use PhpTokenToolkit\Token\TokenInterface;
-
 /**
  *
  *
@@ -46,123 +43,15 @@ use PhpTokenToolkit\Token\TokenInterface;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class CustomPattern implements SearchPatternInterface
+class CustomPattern extends AbstractPattern
 {
-    protected $acceptedTokenTypes = array();
-
-    protected $content;
-
-    protected $contentIsRegex = false;
-
-    protected $endIndex = null;
-
-    protected $endLine = null;
-
-    protected $startIndex = null;
-
-    protected $startLine = null;
-
+    /**
+     * The only purpose of this method is to make parent method public
+     *
+     * @see PhpTokenToolkit\Search\Pattern.AbstractPattern::addTokenType()
+     */
     public function addTokenType($tokenType)
     {
-        if (!in_array($tokenType, $this->acceptedTokenTypes)) {
-            $this->acceptedTokenTypes[] = $tokenType;
-        }
-
-        return $this;
-    }
-
-    public function match(TokenInterface $token)
-    {
-        if (null !== $this->startIndex && $token->getIndex() < $this->startIndex) {
-            return false;
-        }
-
-        if (null !== $this->endIndex && $token->getIndex() > $this->endIndex) {
-            return false;
-        }
-
-        if (null !== $this->startLine && $token->getStartLine() < $this->startLine) {
-            return false;
-        }
-
-        if (null !== $this->endLine && $token->getEndLine() > $this->endLine) {
-            return false;
-        }
-
-        if (null !== $this->content) {
-            if ($this->contentIsRegex) {
-                if (0 === preg_match($this->content, $token->getContent())) {
-                    return false;
-                }
-            } elseif ($token->getContent() != $this->content) {
-                    return false;
-            }
-        }
-
-        if (!in_array($token->getType(), $this->acceptedTokenTypes)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function setContent($content, $isRegex = false)
-    {
-        if (!is_string($content)) {
-            throw \InvalidArgumentException("Invalid content ($content)");
-        }
-
-        if (!is_bool($isRegex)) {
-            throw \InvalidArgumentException("Invalid boolean value ($isRegex)");
-        }
-
-        $this->content        = $content;
-        $this->contentIsRegex = $isRegex;
-
-        return $this;
-    }
-
-    public function setEndIndex($index)
-    {
-        if (!is_int($index) || 0 > $index) {
-            throw \InvalidArgumentException("Invalid end index ($index)");
-        }
-
-        $this->endIndex = $index;
-
-        return $this;
-    }
-
-    public function setEndLine($line)
-    {
-        if (!is_int($line) || 1 > $line) {
-            throw \InvalidArgumentException("Invalid end line ($line)");
-        }
-
-        $this->endLine = $line;
-
-        return $this;
-    }
-
-    public function setStartIndex($index)
-    {
-        if (!is_int($index) || 0 > $index) {
-            throw \InvalidArgumentException("Invalid start index ($index)");
-        }
-
-        $this->startIndex = $index;
-
-        return $this;
-    }
-
-    public function setStartLine($line)
-    {
-        if (!is_int($line) || 1 > $line) {
-            throw \InvalidArgumentException("Invalid start line ($line)");
-        }
-
-        $this->startLine = $line;
-
-        return $this;
+        return parent::addTokenType($tokenType);
     }
 }

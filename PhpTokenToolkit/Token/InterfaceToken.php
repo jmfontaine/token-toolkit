@@ -33,8 +33,11 @@
  */
 namespace PhpTokenToolkit\Token;
 
+use PhpTokenToolkit\Search\Pattern\CustomPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
+
 /**
- * Class representing a T_ABSTRACT token
+ * Class representing a T_INTERFACE token
  *
  * @package PHP Token Toolkit
  * @subpackage Token
@@ -42,7 +45,23 @@ namespace PhpTokenToolkit\Token;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class AbstractToken extends AbstractTokenWithoutScope
+class InterfaceToken extends AbstractTokenWithoutScope
 {
-    protected $name = 'T_ABSTRACT';
+    protected $name = 'T_INTERFACE';
+
+    protected $interfaceName;
+
+    public function getInterfaceName()
+    {
+        if (null === $this->interfaceName) {
+            $token = $this->getTokenStack()
+                          ->findNextTokenByType(T_STRING, $this->getIndex());
+
+            if (false !== $token) {
+                $this->interfaceName = $token->getContent();
+            }
+        }
+
+        return $this->interfaceName;
+    }
 }

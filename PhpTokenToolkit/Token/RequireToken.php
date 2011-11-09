@@ -33,8 +33,11 @@
  */
 namespace PhpTokenToolkit\Token;
 
+use PhpTokenToolkit\Search\Pattern\CustomPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
+
 /**
- * Class representing a T_ABSTRACT token
+ * Class representing a T_REQUIRE token
  *
  * @package PHP Token Toolkit
  * @subpackage Token
@@ -42,7 +45,27 @@ namespace PhpTokenToolkit\Token;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class AbstractToken extends AbstractTokenWithoutScope
+class RequireToken extends AbstractTokenWithoutScope
 {
-    protected $name = 'T_ABSTRACT';
+    protected $filePath;
+
+    protected $name = 'T_REQUIRE';
+
+    /**
+     * @todo Be smarter and handle paths in variables, constants and concatanated strings
+     */
+    public function getFilePath()
+    {
+        if (null === $this->filePath) {
+            $token = $this->getTokenStack()
+                          ->findNextTokenByType(T_CONSTANT_ENCAPSED_STRING, $this->getIndex());
+
+            if (false !== $token) {
+                // Remove enclosing quotes before storing
+                $this->filePath = substr($token->getContent(), 1, -1);
+            }
+        }
+
+        return $this->filePath;
+    }
 }

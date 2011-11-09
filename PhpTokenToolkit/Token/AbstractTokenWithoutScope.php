@@ -33,8 +33,12 @@
  */
 namespace PhpTokenToolkit\Token;
 
+use PhpTokenToolkit\TokenStack;
+
 /**
- * Class representing a T_ABSTRACT token
+ * Abstract class for tokens
+ *
+ * This class is the base for every token classes.
  *
  * @package PHP Token Toolkit
  * @subpackage Token
@@ -42,7 +46,78 @@ namespace PhpTokenToolkit\Token;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class AbstractToken extends AbstractTokenWithoutScope
+abstract class AbstractTokenWithoutScope implements TokenInterface
 {
-    protected $name = 'T_ABSTRACT';
+    protected $content;
+
+    protected $endColumn;
+
+    protected $endLine;
+
+    protected $index;
+
+    protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
+
+    protected $startColumn;
+
+    protected $startLine;
+
+    protected $tokenStack;
+
+    public function __construct($index, $content, $startLine, $startColumn,
+        $endLine, $endColumn, TokenStack $tokenStack)
+    {
+        $this->index       = $index;
+        $this->content     = $content;
+        $this->startLine   = $startLine;
+        $this->startColumn = $startColumn;
+        $this->endLine     = $endLine;
+        $this->endColumn   = $endColumn;
+        $this->tokenStack  = $tokenStack;
+    }
+
+    public function getType()
+    {
+        return constant($this->name);
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function getEndColumn()
+    {
+        return $this->endColumn;
+    }
+
+    public function getEndLine()
+    {
+        return $this->endLine;
+    }
+
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getStartColumn()
+    {
+        return $this->startColumn;
+    }
+
+    public function getStartLine()
+    {
+        return $this->startLine;
+    }
+
+    public function getTokenStack()
+    {
+        return $this->tokenStack;
+    }
 }

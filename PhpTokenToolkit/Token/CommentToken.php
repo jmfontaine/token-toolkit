@@ -34,7 +34,7 @@
 namespace PhpTokenToolkit\Token;
 
 /**
- * Class representing a T_ABSTRACT token
+ * Class representing a T_COMMENT token
  *
  * @package PHP Token Toolkit
  * @subpackage Token
@@ -42,7 +42,7 @@ namespace PhpTokenToolkit\Token;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class AbstractToken extends AbstractTokenWithoutScope
+class CommentToken extends AbstractTokenWithoutScope
 {
-    protected $name = 'T_ABSTRACT';
+    protected $name = 'T_COMMENT';
 }

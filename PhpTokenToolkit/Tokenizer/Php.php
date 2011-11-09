@@ -259,9 +259,4 @@ class Php
 
         return $tokens;
     }
-
-    public function isCustom($tokenCode)
-    {
-        return in_array($tokenCode, $this->simpleCustomTokens);
-    }
 }

@@ -60,16 +60,10 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 
     protected function getTokenClass($tokenType)
     {
-        if ($this->getTokenizer()->isCustom(constant($tokenType))) {
-            $subNamespace = 'Custom';
-        } else {
-            $subNamespace = 'Php';
-        }
-
         $tokenType = substr($tokenType, 2);
         $tokenType = strtolower($tokenType);
 
-        $result = "PhpTokenToolkit\Token\\$subNamespace\\";
+        $result = "PhpTokenToolkit\Token\\";
         foreach (explode('_', $tokenType) as $word) {
             $result .= ucfirst($word);
         }

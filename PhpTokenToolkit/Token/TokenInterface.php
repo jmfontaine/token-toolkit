@@ -66,6 +66,4 @@ interface TokenInterface
     public function getStartLine();
 
     public function getTokenStack();
-
-    public function isCustom();
 }

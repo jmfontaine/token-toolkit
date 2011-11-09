@@ -47,9 +47,9 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
  */
 class InterfaceToken extends AbstractTokenWithoutScope
 {
-    protected $name = 'T_INTERFACE';
-
     protected $interfaceName;
+
+    protected $name = 'T_INTERFACE';
 
     public function getInterfaceName()
     {

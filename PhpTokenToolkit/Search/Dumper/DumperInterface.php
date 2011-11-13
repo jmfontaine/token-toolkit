@@ -26,46 +26,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Search
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
+namespace PhpTokenToolkit\Search\Dumper;
 
-namespace PhpTokenToolkit\Search;
-
-use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
-use PhpTokenToolkit\Token\TokenInterface;
+use PhpTokenToolkit\Search\Result\ResultSet;
 
 /**
+ * Interface for resultset dumpers
  *
  * @package PHP Token Toolkit
- * @subpackage Search
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Result
+interface DumperInterface
 {
-    protected $file;
-
-    protected $searchPattern;
-
-    protected $token;
-
-    public function __construct(TokenInterface $token, SearchPatternInterface $searchPattern)
-    {
-        $this->searchPattern = $searchPattern;
-        $this->token         = $token;
-    }
-
-    public function getSearchPattern()
-    {
-        return $this->searchPattern;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
+    public function dump(ResultSet $resultSet);
 }

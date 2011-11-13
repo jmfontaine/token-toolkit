@@ -31,37 +31,73 @@
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Dumper;
+namespace PhpTokenToolkit\Search\Dumper;
 
-use PhpTokenToolkit\TokenStack;
-use PhpTokenToolkit\Token\TokenInterface;
+use PhpTokenToolkit\Search\Dumper\DumperInterface;
+use PhpTokenToolkit\Search\Result\ResultSet;
 
 /**
- * PHP token stack dumper
- *
- * This dumper creates PHP code from a token stack that can be written to a file
- * for example.
+ * PHP resultset dumper
  *
  * @package PHP Token Toolkit
- * @subpackage Dumper
+ * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Php implements DumperInterface
+class Text implements DumperInterface
 {
-    public function dump(TokenStack $tokenStack)
+    public function dump(ResultSet $resultSet)
     {
-        $result = '';
-        foreach ($tokenStack as $token) {
-            $result .= $token->getContent();
+        $boldDelimiter   = str_repeat('=', 80) . "\n";
+        $normalDelimiter = str_repeat('-', 80) . "\n";
+
+        $numberOfResults = count($resultSet);
+
+        $template = <<<EOT
+# %d
+Search pattern: %s
+File          : %s
+Token
+    Name        : %s
+    Type        : %d
+    Start line  : %d
+    Start column: %d
+    End line    : %d
+    End column  : %d
+    Content     : %s
+
+EOT;
+
+        $text  = $boldDelimiter;
+        $text .= "$numberOfResults results found\n";
+        $text .= $boldDelimiter;
+
+        foreach ($resultSet as $resultIndex => $result) {
+            $token = $result->getToken();
+            $text .= sprintf(
+                $template,
+                $resultIndex + 1,
+                $result->getSearchPattern()->getName(),
+                $token->getTokenStack()->getFile()->getPath(),
+                $token->getName(),
+                $token->getType(),
+                $token->getStartLine(),
+                $token->getStartColumn(),
+                $token->getEndLine(),
+                $token->getEndColumn(),
+                $token->getContent()
+            );
+
+            if ($resultIndex < $numberOfResults - 1) {
+                $text .= $normalDelimiter;
+            }
         }
 
-        return $result;
-    }
+        if (0 < $numberOfResults) {
+            $text .= $boldDelimiter;
+        }
 
-    public function dumpToken(TokenInterface $token)
-    {
-        return $token->getContent();
+        return $text;
     }
 }

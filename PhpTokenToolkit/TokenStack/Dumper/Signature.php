@@ -26,98 +26,49 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Token
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Token;
+namespace PhpTokenToolkit\TokenStack\Dumper;
 
 use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Abstract class for tokens
+ * Signature token stack dumper
  *
- * This class is the base for every token classes.
+ * This dumper creates a visual signature of the file using some of its key elements.
+ * This is based on an article by Ward Cunningham (http://c2.com/doc/SignatureSurvey/).
  *
  * @package PHP Token Toolkit
- * @subpackage Token
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTokenWithoutScope implements TokenInterface
+class Signature implements DumperInterface
 {
-    protected $content;
-
-    protected $endColumn;
-
-    protected $endLine;
-
-    protected $index;
-
-    protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
-
-    protected $startColumn;
-
-    protected $startLine;
-
-    protected $tokenStack;
-
-    public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, TokenStack $tokenStack)
+    public function dump(TokenStack $tokenStack)
     {
-        $this->index       = $index;
-        $this->content     = $content;
-        $this->startLine   = $startLine;
-        $this->startColumn = $startColumn;
-        $this->endLine     = $endLine;
-        $this->endColumn   = $endColumn;
-        $this->tokenStack  = $tokenStack;
+        $allowedTokenTypes = array(
+            T_OPEN_CURLY_BRACKET,
+            T_CLOSE_CURLY_BRACKET,
+            T_SEMICOLON,
+        );
+        $result = '';
+        foreach ($tokenStack as $token) {
+            if (in_array($token->getType(), $allowedTokenTypes)) {
+                $result .= $token->getContent();
+            }
+        }
+
+        return $result;
     }
 
-    public function getType()
+    public function dumpToken(TokenInterface $token)
     {
-        return constant($this->name);
-    }
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function getEndColumn()
-    {
-        return $this->endColumn;
-    }
-
-    public function getEndLine()
-    {
-        return $this->endLine;
-    }
-
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getStartColumn()
-    {
-        return $this->startColumn;
-    }
-
-    public function getStartLine()
-    {
-        return $this->startLine;
-    }
-
-    public function getTokenStack()
-    {
-        return $this->tokenStack;
+        throw new \Exception('This dumper is meant to dump a whole token stack. Not individual tokens.');
     }
 }

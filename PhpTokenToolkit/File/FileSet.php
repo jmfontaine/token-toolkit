@@ -35,7 +35,7 @@ namespace PhpTokenToolkit\File;
 use PhpTokenToolkit\File\Iterator\ExcludeFilterIterator;
 use PhpTokenToolkit\File\Iterator\FileIterator;
 use PhpTokenToolkit\Search\Query as SearchQuery;
-use PhpTokenToolkit\Search\ResultSet;
+use PhpTokenToolkit\Search\Result\ResultSet;
 
 /**
  * Set of PHP files representation

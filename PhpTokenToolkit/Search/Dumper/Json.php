@@ -26,98 +26,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Token
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Token;
+namespace PhpTokenToolkit\Search\Dumper;
 
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\Search\Dumper\DumperInterface;
+use PhpTokenToolkit\Search\Result\ResultSet;
 
 /**
- * Abstract class for tokens
- *
- * This class is the base for every token classes.
+ * PHP resultset dumper
  *
  * @package PHP Token Toolkit
- * @subpackage Token
+ * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-abstract class AbstractTokenWithoutScope implements TokenInterface
+class Json implements DumperInterface
 {
-    protected $content;
-
-    protected $endColumn;
-
-    protected $endLine;
-
-    protected $index;
-
-    protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
-
-    protected $startColumn;
-
-    protected $startLine;
-
-    protected $tokenStack;
-
-    public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, TokenStack $tokenStack)
+    public function dump(ResultSet $resultSet)
     {
-        $this->index       = $index;
-        $this->content     = $content;
-        $this->startLine   = $startLine;
-        $this->startColumn = $startColumn;
-        $this->endLine     = $endLine;
-        $this->endColumn   = $endColumn;
-        $this->tokenStack  = $tokenStack;
-    }
-
-    public function getType()
-    {
-        return constant($this->name);
-    }
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function getEndColumn()
-    {
-        return $this->endColumn;
-    }
-
-    public function getEndLine()
-    {
-        return $this->endLine;
-    }
-
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getStartColumn()
-    {
-        return $this->startColumn;
-    }
-
-    public function getStartLine()
-    {
-        return $this->startLine;
-    }
-
-    public function getTokenStack()
-    {
-        return $this->tokenStack;
+        return json_encode($resultSet->toArray());
     }
 }

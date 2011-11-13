@@ -34,6 +34,8 @@
 
 namespace PhpTokenToolkit\Search;
 
+use PhpTokenToolkit\Search\Result\Result;
+use PhpTokenToolkit\Search\Result\ResultSet;
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;

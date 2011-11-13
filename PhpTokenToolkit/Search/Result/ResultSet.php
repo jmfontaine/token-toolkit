@@ -32,9 +32,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\Search;
-
-use PhpTokenToolkit\Search\Result;
+namespace PhpTokenToolkit\Search\Result;
 
 /**
  * Set of results for a token search
@@ -62,6 +60,16 @@ class ResultSet implements \ArrayAccess, \Countable, \SeekableIterator
         $this->setResults($results);
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        $data = array();
+        foreach ($this->results as $result) {
+            $data[] = $result->toArray();
+        }
+
+        return $data;
     }
 
     /*

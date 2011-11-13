@@ -32,7 +32,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\Search;
+namespace PhpTokenToolkit\Search\Result;
 
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\Token\TokenInterface;
@@ -47,8 +47,6 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 class Result
 {
-    protected $file;
-
     protected $searchPattern;
 
     protected $token;
@@ -67,5 +65,25 @@ class Result
     public function getToken()
     {
         return $this->token;
+    }
+
+    public function toArray()
+    {
+        $token = $this->getToken();
+
+        return array(
+            'searchPattern' => $this->getSearchPattern()->getName(),
+            'file'          => $token->getTokenStack()->getFile()->getPath(),
+            'token'         => array(
+                'startLine'   => $token->getStartLine(),
+                'startColumn' => $token->getStartColumn(),
+                'endLine'     => $token->getEndLine(),
+                'endColumn'   => $token->getEndColumn(),
+                'content'     => $token->getContent(),
+                'index'       => $token->getIndex(),
+                'type'        => $token->getType(),
+                'name'        => $token->getName(),
+            ),
+        );
     }
 }

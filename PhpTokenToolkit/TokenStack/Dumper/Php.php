@@ -26,28 +26,42 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Dumper
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Dumper;
+namespace PhpTokenToolkit\TokenStack\Dumper;
 
-use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\TokenStack\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Interface for token stack dumpers
+ * PHP token stack dumper
+ *
+ * This dumper creates PHP code from a token stack that can be written to a file
+ * for example.
  *
  * @package PHP Token Toolkit
- * @subpackage Dumper
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface DumperInterface
+class Php implements DumperInterface
 {
-    public function dump(TokenStack $tokenStack);
+    public function dump(TokenStack $tokenStack)
+    {
+        $result = '';
+        foreach ($tokenStack as $token) {
+            $result .= $token->getContent();
+        }
 
-    public function dumpToken(TokenInterface $token);
+        return $result;
+    }
+
+    public function dumpToken(TokenInterface $token)
+    {
+        return $token->getContent();
+    }
 }

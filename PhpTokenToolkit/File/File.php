@@ -34,7 +34,7 @@
 namespace PhpTokenToolkit\File;
 
 use PhpTokenToolkit\Search\Query as SearchQuery;
-use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\TokenStack\TokenStack;
 
 /**
  * PHP file representation

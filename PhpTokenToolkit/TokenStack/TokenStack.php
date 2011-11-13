@@ -31,7 +31,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit;
+namespace PhpTokenToolkit\TokenStack;
 
 use PhpTokenToolkit\File\File;
 use PhpTokenToolkit\Search\Pattern\CustomPattern as CustomSearchPattern;
@@ -40,15 +40,16 @@ use PhpTokenToolkit\Token\AbstractToken;
 use PhpTokenToolkit\Token\TokenInterface;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
-class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 /**
  * Stack of PHP tokens for a string
  *
  * @package PHP Token Toolkit
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
+class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 {
     protected $file;
 

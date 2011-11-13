@@ -33,7 +33,7 @@
  */
 namespace PhpTokenToolkit\Token;
 
-use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\TokenStack\TokenStack;
 
 /**
  * Interface for tokens

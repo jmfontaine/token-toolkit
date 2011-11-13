@@ -26,35 +26,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage Dumper
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Dumper;
+namespace PhpTokenToolkit\TokenStack\Dumper;
 
-use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\TokenStack\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * PHP token stack dumper
+ * Text token stack dumper
  *
- * This dumper creates PHP code from a token stack that can be written to a file
- * for example.
+ * This dumper displays informations abour the tokens in the stack. This is
+ * intended for debugging.
  *
  * @package PHP Token Toolkit
- * @subpackage Dumper
+ * @subpackage TokenStack
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Php implements DumperInterface
+class Text implements DumperInterface
 {
     public function dump(TokenStack $tokenStack)
     {
         $result = '';
         foreach ($tokenStack as $token) {
-            $result .= $token->getContent();
+            $result .= $this->dumpToken($token);
         }
 
         return $result;
@@ -62,6 +62,15 @@ class Php implements DumperInterface
 
     public function dumpToken(TokenInterface $token)
     {
-        return $token->getContent();
+        return sprintf(
+            '%d: %s "%s" (%d:%d -> %d:%d)' . PHP_EOL,
+            $token->getIndex(),
+            $token->getName(),
+            $token->getContent(),
+            $token->getStartLine(),
+            $token->getStartColumn(),
+            $token->getEndLine(),
+            $token->getEndColumn()
+        );
     }
 }

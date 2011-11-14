@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
@@ -38,7 +38,7 @@ use PhpTokenToolkit\Token\TokenInterface;
 /**
  * Interface for data dumpers
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>

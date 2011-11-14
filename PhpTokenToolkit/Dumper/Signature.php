@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
@@ -46,7 +46,7 @@ use PhpTokenToolkit\Token\TokenInterface;
  * This dumper creates a visual signature PHP code using some of its key elements.
  * This is based on an article by Ward Cunningham (http://c2.com/doc/SignatureSurvey/).
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>

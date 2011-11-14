@@ -25,12 +25,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Token
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- */
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 namespace PhpTokenToolkit\Token;
 
 use PhpTokenToolkit\Search\Pattern\CustomPattern;
@@ -39,12 +38,11 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
 /**
  * Class representing a T_INTERFACE token
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Token
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- */
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 class InterfaceToken extends AbstractTokenWithoutScope
 {
     protected $interfaceName;

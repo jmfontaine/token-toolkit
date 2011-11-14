@@ -25,12 +25,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Token
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- */
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 namespace PhpTokenToolkit\Token;
 
 use PhpTokenToolkit\TokenStack;
@@ -40,12 +39,11 @@ use PhpTokenToolkit\TokenStack;
  *
  * This class is the base for every token classes.
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Token
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- */
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 abstract class AbstractTokenWithoutScope implements TokenInterface
 {
     protected $content;

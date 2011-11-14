@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -39,7 +39,7 @@ use PhpTokenToolkit\TokenStack;
 /**
  * PHP file representation
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage File
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>

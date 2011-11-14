@@ -25,7 +25,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
@@ -37,7 +37,7 @@ namespace PhpTokenToolkit\Search\Pattern;
 /**
  *
  *
- * @package PHP Token Toolkit
+ * @package PhpTokenToolkit
  * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>

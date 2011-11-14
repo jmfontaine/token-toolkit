@@ -25,55 +25,55 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Tokenizer
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 namespace PhpTokenToolkit\Tokenizer;
 
 if (!defined('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED')) {
-	define('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED', true);
+    define('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED', true);
 
-	define('T_NULL'                , 1000);
-	define('T_FALSE'               , 1001);
-	define('T_TRUE'                , 1002);
-	define('T_THIS'                , 1003);
-	define('T_SELF'                , 1004);
-	define('T_PARENT'              , 1005);
-	define('T_OPEN_PARENTHESIS'    , 1006);
-	define('T_CLOSE_PARENTHESIS'   , 1007);
-	define('T_OPEN_CURLY_BRACKET'  , 1008);
-	define('T_CLOSE_CURLY_BRACKET' , 1009);
-	define('T_OPEN_SQUARE_BRACKET' , 1010);
-	define('T_CLOSE_SQUARE_BRACKET', 1011);
-	define('T_COMMA'               , 1012);
-	define('T_SEMICOLON'           , 1013);
-	define('T_COLON'               , 1014);
-	define('T_CONCAT'              , 1015);
-	define('T_EQUAL'               , 1016);
-	define('T_GREATER_THAN'        , 1017);
-	define('T_LESS_THAN'           , 1018);
-	define('T_MULTIPLY'            , 1019);
-	define('T_DIVIDE'              , 1020);
-	define('T_PLUS'                , 1021);
-	define('T_MINUS'               , 1022);
-	define('T_MODULUS'             , 1023);
-	define('T_POWER'               , 1024);
-	define('T_BITWISE_AND'         , 1025);
-	define('T_BITWISE_OR'          , 1026);
-	define('T_BACKTICK'            , 1027);
+    define('T_NULL'                , 1000);
+    define('T_FALSE'               , 1001);
+    define('T_TRUE'                , 1002);
+    define('T_THIS'                , 1003);
+    define('T_SELF'                , 1004);
+    define('T_PARENT'              , 1005);
+    define('T_OPEN_PARENTHESIS'    , 1006);
+    define('T_CLOSE_PARENTHESIS'   , 1007);
+    define('T_OPEN_CURLY_BRACKET'  , 1008);
+    define('T_CLOSE_CURLY_BRACKET' , 1009);
+    define('T_OPEN_SQUARE_BRACKET' , 1010);
+    define('T_CLOSE_SQUARE_BRACKET', 1011);
+    define('T_COMMA'               , 1012);
+    define('T_SEMICOLON'           , 1013);
+    define('T_COLON'               , 1014);
+    define('T_CONCAT'              , 1015);
+    define('T_EQUAL'               , 1016);
+    define('T_GREATER_THAN'        , 1017);
+    define('T_LESS_THAN'           , 1018);
+    define('T_MULTIPLY'            , 1019);
+    define('T_DIVIDE'              , 1020);
+    define('T_PLUS'                , 1021);
+    define('T_MINUS'               , 1022);
+    define('T_MODULUS'             , 1023);
+    define('T_POWER'               , 1024);
+    define('T_BITWISE_AND'         , 1025);
+    define('T_BITWISE_OR'          , 1026);
+    define('T_BACKTICK'            , 1027);
 }
 
 /**
  * Tokenizer for PHP
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage Tokenizer
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Php
 {
@@ -82,7 +82,7 @@ class Php
     const EOL_CHAR_WINDOWS = "\r\n";
 
     protected $simpleCustomTokens = array(
-		'null'   => T_NULL,
+        'null'   => T_NULL,
         'false'  => T_FALSE,
         'true'   => T_TRUE,
         'this'   => T_THIS,
@@ -167,7 +167,7 @@ class Php
             } else {
                 // If it not a custom token there is a problem
                 throw new \InvalidArgumentException(
-                	"Invalid token code ($tokenCode)"
+                    "Invalid token code ($tokenCode)"
                 );
             }
         }
@@ -216,7 +216,7 @@ class Php
             // Token line number can only change in tokens that span several
             // lines.
             if (in_array($tokenType, $this->multilineTokens)
-                && false !== strpos($tokenContent, $eolCharacter))  {
+                && false !== strpos($tokenContent, $eolCharacter)) {
                 $parts         = explode($eolCharacter, $tokenContent);
                 $lastPartIndex = count($parts) - 1;
 

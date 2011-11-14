@@ -25,10 +25,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package PHP Token Toolkit
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @package   PhpTokenToolkit
+ * @author    Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PhpTokenToolkit;
@@ -43,11 +43,11 @@ use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 /**
  * Stack of PHP tokens for a string
  *
- * @package PHP Token Toolkit
+ * @package    PhpTokenToolkit
  * @subpackage TokenStack
- * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 {
@@ -75,7 +75,7 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 
     protected function processSourceFile(File $file)
     {
-        $content      = $file->getSource() ;
+        $content      = $file->getSource();
         $eolCharacter = $file->getEolCharacter();
 
         return $this->processSourceString($content, $eolCharacter);
@@ -244,15 +244,17 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 
     /**
      * (non-PHPdoc)
+     *
      * @see SeekableIterator::seek()
      */
-    public function seek($position) {
-      $this->iteratorCursor = $position;
+    public function seek($position)
+    {
+        $this->iteratorCursor = $position;
 
-      if (!$this->valid()) {
-          throw new \OutOfBoundsException("Invalid seek position ($position)");
-      }
+        if (!$this->valid()) {
+            throw new \OutOfBoundsException("Invalid seek position ($position)");
+        }
 
-      return $this;
+        return $this;
     }
 }

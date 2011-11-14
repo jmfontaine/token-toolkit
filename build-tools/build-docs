@@ -1,0 +1,9 @@
+#!/bin/bash
+SCRIPT_PATH=$(cd ${0%/*}; pwd);
+ROOT_PATH=$SCRIPT_PATH/..
+
+docblox run \
+    -d $ROOT_PATH/PhpTokenToolkit \
+    -t $ROOT_PATH/docs \
+    -p \
+    --title="PHP Token Toolkit"

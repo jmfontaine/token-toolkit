@@ -26,51 +26,52 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage TokenStack
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\TokenStack\Dumper;
+namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\TokenStack\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Text token stack dumper
- *
- * This dumper displays informations abour the tokens in the stack. This is
- * intended for debugging.
+ * Interface for data dumpers
  *
  * @package PHP Token Toolkit
- * @subpackage TokenStack
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Text implements DumperInterface
+abstract class AbstractDumper implements DumperInterface
 {
-    public function dump(TokenStack $tokenStack)
+    public function dump($object)
     {
-        $result = '';
-        foreach ($tokenStack as $token) {
-            $result .= $this->dumpToken($token);
+        switch (get_class($object)) {
+            case 'PhpTokenToolkit\File\File':
+                $data = $this->dumpFile($object);
+                break;
+            case 'PhpTokenToolkit\File\FileSet':
+                $data = $this->dumpFileSet($object);
+                break;
+            case 'PhpTokenToolkit\Search\Result\Result':
+                $data = $this->dumpSearchResult($object);
+                break;
+            case 'PhpTokenToolkit\Search\Result\ResultSet':
+                $data = $this->dumpSearchResultSet($object);
+                break;
+            case 'PhpTokenToolkit\TokenStack':
+                $data = $this->dumpTokenStack($object);
+                break;
+            default:
+                if ($object instanceof TokenInterface) {
+                    $data = $this->dumpToken($object);
+                } else {
+                    throw new \InvalidArgumentException('The argument is not an instance of the supported classes.');
+                }
         }
 
-        return $result;
-    }
-
-    public function dumpToken(TokenInterface $token)
-    {
-        return sprintf(
-            '%d: %s "%s" (%d:%d -> %d:%d)' . PHP_EOL,
-            $token->getIndex(),
-            $token->getName(),
-            $token->getContent(),
-            $token->getStartLine(),
-            $token->getStartColumn(),
-            $token->getEndLine(),
-            $token->getEndColumn()
-        );
+        return $data;
     }
 }

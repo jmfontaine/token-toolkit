@@ -31,24 +31,37 @@
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Search\Dumper;
+namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\Search\Dumper\DumperInterface;
+use PhpTokenToolkit\File\File;
+use PhpTokenToolkit\File\FileSet;
+use PhpTokenToolkit\Search\Result\Result;
 use PhpTokenToolkit\Search\Result\ResultSet;
+use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * PHP resultset dumper
+ * Interface for data dumpers
  *
  * @package PHP Token Toolkit
- * @subpackage Search
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Json implements DumperInterface
+interface DumperInterface
 {
-    public function dump(ResultSet $resultSet)
-    {
-        return json_encode($resultSet->toArray());
-    }
+    public function dump($data);
+
+    public function dumpFile(File $file);
+
+    public function dumpFileSet(FileSet $fileSet);
+
+    public function dumpSearchResult(Result $result);
+
+    public function dumpSearchResultSet(ResultSet $resultSet);
+
+    public function dumpToken(TokenInterface $token);
+
+    public function dumpTokenStack(TokenStack $tokenStack);
 }

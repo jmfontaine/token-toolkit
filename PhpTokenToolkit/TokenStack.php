@@ -31,7 +31,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\TokenStack;
+namespace PhpTokenToolkit;
 
 use PhpTokenToolkit\File\File;
 use PhpTokenToolkit\Search\Pattern\CustomPattern as CustomSearchPattern;
@@ -165,6 +165,17 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
     public function getTokens()
     {
         return $this->tokens;
+    }
+
+    public function toArray()
+    {
+        $data = array();
+
+        foreach ($this as $token) {
+            $data[] = $token->toArray();
+        }
+
+        return $data;
     }
 
     /*

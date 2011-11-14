@@ -38,7 +38,7 @@ use PhpTokenToolkit\Search\Result\Result;
 use PhpTokenToolkit\Search\Result\ResultSet;
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\Token\TokenInterface;
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\TokenStack;
 
 /**
  * Query for PHP token search

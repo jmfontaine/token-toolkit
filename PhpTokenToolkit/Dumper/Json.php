@@ -31,12 +31,17 @@
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Search\Dumper;
+namespace PhpTokenToolkit\Dumper;
 
+use PhpTokenToolkit\File\File;
+use PhpTokenToolkit\File\FileSet;
+use PhpTokenToolkit\Search\Result\Result;
 use PhpTokenToolkit\Search\Result\ResultSet;
+use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Interface for resultset dumpers
+ * JSON dumper
  *
  * @package PHP Token Toolkit
  * @subpackage Dumper
@@ -44,7 +49,47 @@ use PhpTokenToolkit\Search\Result\ResultSet;
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface DumperInterface
+class Json extends AbstractDumper
 {
-    public function dump(ResultSet $resultSet);
+    public function dumpFile(File $file)
+    {
+        return json_encode($file->toArray());
+    }
+
+    public function dumpFileSet(FileSet $fileSet)
+    {
+        $data = array();
+
+        foreach ($fileSet as $file) {
+            $data[] = $file->toArray();
+        }
+
+        return json_encode($data);
+    }
+
+    public function dumpSearchResult(Result $result)
+    {
+        return json_encode($result->toArray());
+    }
+
+    public function dumpSearchResultSet(ResultSet $resultSet)
+    {
+        return json_encode($resultSet->toArray());
+    }
+
+    public function dumpToken(TokenInterface $token)
+    {
+        return json_encode($token->toArray());
+    }
+
+    public function dumpTokenStack(TokenStack $tokenStack)
+    {
+        $data = array();
+
+        foreach ($tokenStack as $token) {
+            $data[] = $token->toArray();
+        }
+
+        return json_encode($data);
+    }
 }

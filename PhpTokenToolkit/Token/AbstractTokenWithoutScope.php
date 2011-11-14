@@ -33,7 +33,7 @@
  */
 namespace PhpTokenToolkit\Token;
 
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\TokenStack;
 
 /**
  * Abstract class for tokens
@@ -119,5 +119,19 @@ abstract class AbstractTokenWithoutScope implements TokenInterface
     public function getTokenStack()
     {
         return $this->tokenStack;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'startLine'   => $this->getStartLine(),
+            'startColumn' => $this->getStartColumn(),
+            'endLine'     => $this->getEndLine(),
+            'endColumn'   => $this->getEndColumn(),
+            'content'     => $this->getContent(),
+            'index'       => $this->getIndex(),
+            'type'        => $this->getType(),
+            'name'        => $this->getName(),
+        );
     }
 }

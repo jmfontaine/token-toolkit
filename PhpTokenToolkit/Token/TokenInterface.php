@@ -33,7 +33,7 @@
  */
 namespace PhpTokenToolkit\Token;
 
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\TokenStack;
 
 /**
  * Interface for tokens
@@ -66,4 +66,6 @@ interface TokenInterface
     public function getStartLine();
 
     public function getTokenStack();
+
+    public function toArray();
 }

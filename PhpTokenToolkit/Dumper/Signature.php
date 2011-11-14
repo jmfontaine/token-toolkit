@@ -26,28 +26,83 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * @package PHP Token Toolkit
- * @subpackage TokenStack
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\TokenStack\Dumper;
+namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\File\File;
+use PhpTokenToolkit\File\FileSet;
+use PhpTokenToolkit\Search\Result\Result;
+use PhpTokenToolkit\Search\Result\ResultSet;
+use PhpTokenToolkit\TokenStack;
 use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * Interface for token stack dumpers
+ * Signature dumper
+ *
+ * This dumper creates a visual signature PHP code using some of its key elements.
+ * This is based on an article by Ward Cunningham (http://c2.com/doc/SignatureSurvey/).
  *
  * @package PHP Token Toolkit
- * @subpackage TokenStack
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface DumperInterface
+class Signature extends AbstractDumper
 {
-    public function dump(TokenStack $tokenStack);
+    public function dumpFile(File $file)
+    {
+        return sprintf(
+            "%s: %s\n",
+            $file->getPath(),
+            $this->dumpTokenStack($file->getTokenStack())
+        );
+    }
 
-    public function dumpToken(TokenInterface $token);
+    public function dumpFileSet(FileSet $fileSet)
+    {
+        $data = '';
+
+        foreach ($fileSet as $file) {
+            $data .= $this->dumpFile($file);
+        }
+
+        return $data;
+    }
+
+    public function dumpSearchResult(Result $result)
+    {
+        throw new \Exception('This dumper is not meant to dump search results.');
+    }
+
+    public function dumpSearchResultSet(ResultSet $resultSet)
+    {
+        throw new \Exception('This dumper is not meant to dump search results.');
+    }
+
+    public function dumpToken(TokenInterface $token)
+    {
+        throw new \Exception('This dumper is not meant to dump individual tokens.');
+    }
+
+    public function dumpTokenStack(TokenStack $tokenStack)
+    {
+        $allowedTokenTypes = array(
+            T_OPEN_CURLY_BRACKET,
+            T_CLOSE_CURLY_BRACKET,
+            T_SEMICOLON,
+        );
+        $result = '';
+        foreach ($tokenStack as $token) {
+            if (in_array($token->getType(), $allowedTokenTypes)) {
+                $result .= $token->getContent();
+            }
+        }
+
+        return $result;
+    }
 }

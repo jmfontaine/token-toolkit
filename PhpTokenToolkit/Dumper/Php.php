@@ -31,73 +31,58 @@
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace PhpTokenToolkit\Search\Dumper;
+namespace PhpTokenToolkit\Dumper;
 
-use PhpTokenToolkit\Search\Dumper\DumperInterface;
+use PhpTokenToolkit\File\File;
+use PhpTokenToolkit\File\FileSet;
+use PhpTokenToolkit\Search\Result\Result;
 use PhpTokenToolkit\Search\Result\ResultSet;
+use PhpTokenToolkit\TokenStack;
+use PhpTokenToolkit\Token\TokenInterface;
 
 /**
- * PHP resultset dumper
+ * PHP dumper
  *
  * @package PHP Token Toolkit
- * @subpackage Search
+ * @subpackage Dumper
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class Text implements DumperInterface
+class Php extends AbstractDumper
 {
-    public function dump(ResultSet $resultSet)
+    public function dumpFile(File $file)
     {
-        $boldDelimiter   = str_repeat('=', 80) . "\n";
-        $normalDelimiter = str_repeat('-', 80) . "\n";
+        return $this->dumpTokenStack($file->getTokenStack());
+    }
 
-        $numberOfResults = count($resultSet);
+    public function dumpFileSet(FileSet $fileSet)
+    {
+        throw new \Exception('This dumper is not meant to file sets.');
+    }
 
-        $template = <<<EOT
-# %d
-Search pattern: %s
-File          : %s
-Token
-    Name        : %s
-    Type        : %d
-    Start line  : %d
-    Start column: %d
-    End line    : %d
-    End column  : %d
-    Content     : %s
+    public function dumpSearchResult(Result $result)
+    {
+        throw new \Exception('This dumper is not meant to dump search results.');
+    }
 
-EOT;
+    public function dumpSearchResultSet(ResultSet $resultSet)
+    {
+        throw new \Exception('This dumper is not meant to dump search results.');
+    }
 
-        $text  = $boldDelimiter;
-        $text .= "$numberOfResults results found\n";
-        $text .= $boldDelimiter;
+    public function dumpToken(TokenInterface $token)
+    {
+        return $token->getContent();
+    }
 
-        foreach ($resultSet as $resultIndex => $result) {
-            $token = $result->getToken();
-            $text .= sprintf(
-                $template,
-                $resultIndex + 1,
-                $result->getSearchPattern()->getName(),
-                $token->getTokenStack()->getFile()->getPath(),
-                $token->getName(),
-                $token->getType(),
-                $token->getStartLine(),
-                $token->getStartColumn(),
-                $token->getEndLine(),
-                $token->getEndColumn(),
-                $token->getContent()
-            );
-
-            if ($resultIndex < $numberOfResults - 1) {
-                $text .= $normalDelimiter;
-            }
+    public function dumpTokenstack(TokenStack $tokenStack)
+    {
+        $result = '';
+        foreach ($tokenStack as $token) {
+            $result .= $token->getContent();
         }
 
-        if (0 < $numberOfResults) {
-            $text .= $boldDelimiter;
-        }
-
-        return $text;
+        return $result;
     }
 }

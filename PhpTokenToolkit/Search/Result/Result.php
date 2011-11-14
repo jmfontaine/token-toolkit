@@ -34,6 +34,7 @@
 
 namespace PhpTokenToolkit\Search\Result;
 
+use PhpTokenToolkit\File\File;
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\Token\TokenInterface;
 
@@ -69,21 +70,14 @@ class Result
 
     public function toArray()
     {
-        $token = $this->getToken();
+        $token    = $this->getToken();
+        $file     = $token->getTokenStack()->getFile();
+        $filePath = $file instanceof File ? $file->getPath() : '-';
 
         return array(
             'searchPattern' => $this->getSearchPattern()->getName(),
-            'file'          => $token->getTokenStack()->getFile()->getPath(),
-            'token'         => array(
-                'startLine'   => $token->getStartLine(),
-                'startColumn' => $token->getStartColumn(),
-                'endLine'     => $token->getEndLine(),
-                'endColumn'   => $token->getEndColumn(),
-                'content'     => $token->getContent(),
-                'index'       => $token->getIndex(),
-                'type'        => $token->getType(),
-                'name'        => $token->getName(),
-            ),
+            'file'          => $filePath,
+            'token'         => $token->toArray(),
         );
     }
 }

@@ -34,7 +34,7 @@
 namespace PhpTokenToolkit\File;
 
 use PhpTokenToolkit\Search\Query as SearchQuery;
-use PhpTokenToolkit\TokenStack\TokenStack;
+use PhpTokenToolkit\TokenStack;
 
 /**
  * PHP file representation
@@ -115,5 +115,13 @@ class File
         $searchQuery->setDirection($direction);
 
         return $searchQuery->search();
+    }
+
+    public function toArray()
+    {
+        return array(
+            'file'   => $this->getPath(),
+            'tokens' => $this->getTokenStack()->toArray(),
+        );
     }
 }

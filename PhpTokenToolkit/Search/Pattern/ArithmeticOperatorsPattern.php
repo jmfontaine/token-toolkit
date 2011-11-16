@@ -51,6 +51,7 @@ class ArithmeticOperatorsPattern extends AbstractPattern
              ->addTokenType(T_MINUS)
              ->addTokenType(T_MULTIPLY)
              ->addTokenType(T_MODULUS)
-             ->addTokenType(T_PLUS);
+             ->addTokenType(T_PLUS)
+             ->addTokenType(T_POWER);
     }
 }

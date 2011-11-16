@@ -33,14 +33,14 @@
 namespace PhpTokenToolkit\Token;
 
 /**
- * Class representing a T_FOREACH token
+ * Class representing a T_CLOSURE token
  *
  * @package    PhpTokenToolkit
  * @subpackage Token
  * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
-class ForeachToken extends AbstractTokenWithScope
+class ClosureToken extends AbstractTokenWithScope
 {
-    protected $name = 'T_FOREACH';
+    protected $name = 'T_CLOSURE';
 }

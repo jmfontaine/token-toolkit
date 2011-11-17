@@ -47,11 +47,11 @@ class ArithmeticOperatorsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_DIVIDE)
-             ->addTokenType(T_MINUS)
-             ->addTokenType(T_MULTIPLY)
-             ->addTokenType(T_MODULUS)
-             ->addTokenType(T_PLUS)
-             ->addTokenType(T_POWER);
+        $this->addAcceptedTokenType(T_DIVIDE)
+             ->addAcceptedTokenType(T_MINUS)
+             ->addAcceptedTokenType(T_MULTIPLY)
+             ->addAcceptedTokenType(T_MODULUS)
+             ->addAcceptedTokenType(T_PLUS)
+             ->addAcceptedTokenType(T_POWER);
     }
 }

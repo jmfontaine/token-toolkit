@@ -52,7 +52,7 @@ class ClassToken extends AbstractTokenWithInnerScope
         $innerScope = $this->getInnerScope();
 
         $searchPattern = new CustomSearchPattern();
-        $searchPattern->addTokenType(T_FUNCTION)
+        $searchPattern->addAcceptedTokenType(T_FUNCTION)
                       ->setStartIndex($innerScope->getStartToken()->getIndex())
                       ->setEndIndex($innerScope->getEndToken()->getIndex());
 

@@ -47,9 +47,9 @@ class FileInclusionsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_REQUIRE)
-             ->addTokenType(T_REQUIRE_ONCE)
-             ->addTokenType(T_INCLUDE)
-             ->addTokenType(T_INCLUDE_ONCE);
+        $this->addAcceptedTokenType(T_REQUIRE)
+             ->addAcceptedTokenType(T_REQUIRE_ONCE)
+             ->addAcceptedTokenType(T_INCLUDE)
+             ->addAcceptedTokenType(T_INCLUDE_ONCE);
     }
 }

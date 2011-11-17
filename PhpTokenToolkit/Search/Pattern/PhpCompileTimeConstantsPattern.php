@@ -47,12 +47,12 @@ class PhpCompileTimeConstantsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_CLASS_C)
-             ->addTokenType(T_DIR)
-             ->addTokenType(T_FILE)
-             ->addTokenType(T_FUNC_C)
-             ->addTokenType(T_LINE)
-             ->addTokenType(T_METHOD_C)
-             ->addTokenType(T_NS_C);
+        $this->addAcceptedTokenType(T_CLASS_C)
+             ->addAcceptedTokenType(T_DIR)
+             ->addAcceptedTokenType(T_FILE)
+             ->addAcceptedTokenType(T_FUNC_C)
+             ->addAcceptedTokenType(T_LINE)
+             ->addAcceptedTokenType(T_METHOD_C)
+             ->addAcceptedTokenType(T_NS_C);
     }
 }

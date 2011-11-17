@@ -47,15 +47,15 @@ class AssignmentOperatorsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_AND_EQUAL)
-             ->addTokenType(T_CONCAT_EQUAL)
-             ->addTokenType(T_DOUBLE_ARROW)
-             ->addTokenType(T_DIV_EQUAL)
-             ->addTokenType(T_EQUAL)
-             ->addTokenType(T_MINUS_EQUAL)
-             ->addTokenType(T_MOD_EQUAL)
-             ->addTokenType(T_MUL_EQUAL)
-             ->addTokenType(T_PLUS_EQUAL)
-             ->addTokenType(T_XOR_EQUAL);
+        $this->addAcceptedTokenType(T_AND_EQUAL)
+             ->addAcceptedTokenType(T_CONCAT_EQUAL)
+             ->addAcceptedTokenType(T_DOUBLE_ARROW)
+             ->addAcceptedTokenType(T_DIV_EQUAL)
+             ->addAcceptedTokenType(T_EQUAL)
+             ->addAcceptedTokenType(T_MINUS_EQUAL)
+             ->addAcceptedTokenType(T_MOD_EQUAL)
+             ->addAcceptedTokenType(T_MUL_EQUAL)
+             ->addAcceptedTokenType(T_PLUS_EQUAL)
+             ->addAcceptedTokenType(T_XOR_EQUAL);
     }
 }

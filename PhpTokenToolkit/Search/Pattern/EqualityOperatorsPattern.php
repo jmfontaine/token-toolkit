@@ -47,11 +47,11 @@ class EqualityOperatorsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_IS_EQUAL)
-             ->addTokenType(T_IS_GREATER_OR_EQUAL)
-             ->addTokenType(T_IS_IDENTICAL)
-             ->addTokenType(T_IS_NOT_EQUAL)
-             ->addTokenType(T_IS_NOT_IDENTICAL)
-             ->addTokenType(T_IS_SMALLER_OR_EQUAL);
+        $this->addAcceptedTokenType(T_IS_EQUAL)
+             ->addAcceptedTokenType(T_IS_GREATER_OR_EQUAL)
+             ->addAcceptedTokenType(T_IS_IDENTICAL)
+             ->addAcceptedTokenType(T_IS_NOT_EQUAL)
+             ->addAcceptedTokenType(T_IS_NOT_IDENTICAL)
+             ->addAcceptedTokenType(T_IS_SMALLER_OR_EQUAL);
     }
 }

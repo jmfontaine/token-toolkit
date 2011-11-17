@@ -48,10 +48,20 @@ class CustomPattern extends AbstractPattern
     /**
      * The only purpose of this method is to make parent method public
      *
-     * @see PhpTokenToolkit\Search\Pattern.AbstractPattern::addTokenType()
+     * @see PhpTokenToolkit\Search\Pattern.AbstractPattern::addAcceptedTokenType()
      */
-    public function addTokenType($tokenType)
+    public function addAcceptedTokenType($tokenType)
     {
-        return parent::addTokenType($tokenType);
+        return parent::addAcceptedTokenType($tokenType);
+    }
+
+    /**
+     * The only purpose of this method is to make parent method public
+     *
+     * @see PhpTokenToolkit\Search\Pattern.AbstractPattern::addExcludedTokenType()
+     */
+    public function addExcludedTokenType($tokenType)
+    {
+        return parent::addExcludedTokenType($tokenType);
     }
 }

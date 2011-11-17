@@ -47,8 +47,8 @@ class PhpTagsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_OPEN_TAG)
-             ->addTokenType(T_OPEN_TAG_WITH_ECHO)
-             ->addTokenType(T_CLOSE_TAG);
+        $this->addAcceptedTokenType(T_OPEN_TAG)
+             ->addAcceptedTokenType(T_OPEN_TAG_WITH_ECHO)
+             ->addAcceptedTokenType(T_CLOSE_TAG);
     }
 }

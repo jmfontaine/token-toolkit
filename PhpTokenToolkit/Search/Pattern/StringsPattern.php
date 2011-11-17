@@ -47,8 +47,8 @@ class CommentsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_CONSTANT_ENCAPSED_STRING)
-             ->addTokenType(T_DOUBLE_QUOTED_STRING)
-             ->addTokenType(T_STRING);
+        $this->addAcceptedTokenType(T_CONSTANT_ENCAPSED_STRING)
+             ->addAcceptedTokenType(T_DOUBLE_QUOTED_STRING)
+             ->addAcceptedTokenType(T_STRING);
     }
 }

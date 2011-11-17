@@ -47,10 +47,10 @@ class BooleanOperatorsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_BOOLEAN_AND)
-             ->addTokenType(T_BOOLEAN_OR)
-             ->addTokenType(T_LOGICAL_AND)
-             ->addTokenType(T_LOGICAL_OR)
-             ->addTokenType(T_LOGICAL_XOR);
+        $this->addAcceptedTokenType(T_BOOLEAN_AND)
+             ->addAcceptedTokenType(T_BOOLEAN_OR)
+             ->addAcceptedTokenType(T_LOGICAL_AND)
+             ->addAcceptedTokenType(T_LOGICAL_OR)
+             ->addAcceptedTokenType(T_LOGICAL_XOR);
     }
 }

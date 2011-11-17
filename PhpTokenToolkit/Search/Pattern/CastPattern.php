@@ -47,12 +47,12 @@ class CastPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_ARRAY_CAST)
-             ->addTokenType(T_BOOL_CAST)
-             ->addTokenType(T_DOUBLE_CAST)
-             ->addTokenType(T_INT_CAST)
-             ->addTokenType(T_OBJECT_CAST)
-             ->addTokenType(T_STRING_CAST)
-             ->addTokenType(T_UNSET_CAST);
+        $this->addAcceptedTokenType(T_ARRAY_CAST)
+             ->addAcceptedTokenType(T_BOOL_CAST)
+             ->addAcceptedTokenType(T_DOUBLE_CAST)
+             ->addAcceptedTokenType(T_INT_CAST)
+             ->addAcceptedTokenType(T_OBJECT_CAST)
+             ->addAcceptedTokenType(T_STRING_CAST)
+             ->addAcceptedTokenType(T_UNSET_CAST);
     }
 }

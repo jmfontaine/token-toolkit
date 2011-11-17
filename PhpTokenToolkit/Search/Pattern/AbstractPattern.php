@@ -59,6 +59,8 @@ abstract class AbstractPattern implements SearchPatternInterface
 
     protected $endLine = null;
 
+    protected $excludedTokenTypes = array();
+
     protected $name;
 
     protected $startIndex = null;
@@ -70,10 +72,19 @@ abstract class AbstractPattern implements SearchPatternInterface
         return null === $this->name ? get_class($this) : $this->name;
     }
 
-    protected function addTokenType($tokenType)
+    protected function addAcceptedTokenType($tokenType)
     {
         if (!in_array($tokenType, $this->acceptedTokenTypes)) {
             $this->acceptedTokenTypes[] = $tokenType;
+        }
+
+        return $this;
+    }
+
+    protected function addExcludedTokenType($tokenType)
+    {
+        if (!in_array($tokenType, $this->excludedTokenTypes)) {
+            $this->excludedTokenTypes[] = $tokenType;
         }
 
         return $this;

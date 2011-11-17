@@ -47,7 +47,7 @@ class BinaryOperatorsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_BITWISE_AND)
-             ->addTokenType(T_BITWISE_OR);
+        $this->addAcceptedTokenType(T_BITWISE_AND)
+             ->addAcceptedTokenType(T_BITWISE_OR);
     }
 }

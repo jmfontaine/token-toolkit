@@ -47,8 +47,8 @@ class NonCodePattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_COMMENT)
-             ->addTokenType(T_DOC_COMMENT)
-             ->addTokenType(T_WHITESPACE);
+        $this->addAcceptedTokenType(T_COMMENT)
+             ->addAcceptedTokenType(T_DOC_COMMENT)
+             ->addAcceptedTokenType(T_WHITESPACE);
     }
 }

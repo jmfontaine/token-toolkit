@@ -47,7 +47,7 @@ class CommentsPattern extends AbstractPattern
 {
     public function __construct()
     {
-        $this->addTokenType(T_COMMENT)
-             ->addTokenType(T_DOC_COMMENT);
+        $this->addAcceptedTokenType(T_COMMENT)
+             ->addAcceptedTokenType(T_DOC_COMMENT);
     }
 }

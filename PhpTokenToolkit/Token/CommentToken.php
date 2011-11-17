@@ -40,7 +40,7 @@ namespace PhpTokenToolkit\Token;
  * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
-class CommentToken extends AbstractTokenWithoutScope
+class CommentToken extends AbstractTokenWithoutInnerScope
 {
     protected $name = 'T_COMMENT';
 }

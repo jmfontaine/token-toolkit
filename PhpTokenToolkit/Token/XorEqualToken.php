@@ -41,7 +41,7 @@ namespace PhpTokenToolkit\Token;
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class XorEqualToken extends AbstractTokenWithoutScope
+class XorEqualToken extends AbstractTokenWithoutInnerScope
 {
     protected $name = 'T_XOR_EQUAL';
 }

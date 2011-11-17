@@ -40,7 +40,7 @@ namespace PhpTokenToolkit\Token;
  * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
-class IsEqualToken extends AbstractTokenWithoutScope
+class IsEqualToken extends AbstractTokenWithoutInnerScope
 {
     protected $name = 'T_IS_EQUAL';
 }

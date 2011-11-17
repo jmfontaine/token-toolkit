@@ -40,7 +40,7 @@ namespace PhpTokenToolkit\Token;
  * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
-class SwitchToken extends AbstractTokenWithScope
+class SwitchToken extends AbstractTokenWithInnerScope
 {
     protected $name = 'T_SWITCH';
 }

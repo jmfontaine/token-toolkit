@@ -43,7 +43,7 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
  * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
-class ClassToken extends AbstractTokenWithScope
+class ClassToken extends AbstractTokenWithInnerScope
 {
     protected $name = 'T_CLASS';
 

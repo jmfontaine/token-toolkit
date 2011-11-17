@@ -33,9 +33,9 @@
 namespace PhpTokenToolkit\Token;
 
 /**
- * Abstract class for tokens with scope.
+ * Abstract class for tokens with inner scope.
  *
- * This class is the base for every token classes that have a scope, that is to
+ * This class is the base for every token classes that have an inner scope, that is to
  * say sub-elements like classes and functions.
  *
  * @package    PhpTokenToolkit
@@ -45,16 +45,33 @@ namespace PhpTokenToolkit\Token;
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 abstract class AbstractTokenWithScope extends AbstractTokenWithoutScope
 {
-    protected $endToken;
+    protected $innerScope;
 
-    public function getEndToken()
+    public function getInnerScope()
     {
-        if (null === $this->endToken) {
-            $tokens = $this->getTokenStack()->getTokens();
+        if (null === $this->innerScope) {
+            $tokenStack = $this->getTokenStack();
+            $startToken = $tokenStack->findNextTokenByType(T_OPEN_CURLY_BRACKET, $this->getIndex());
 
-            // TODO: Complete this
+            $count = 1;
+            for ($i = $startToken->getIndex() + 1; ; $i++) {
+                $tokenType = $tokenStack[$i]->getType();
+
+                if (T_OPEN_CURLY_BRACKET === $tokenType) {
+                    $count++;
+                } elseif (T_CLOSE_CURLY_BRACKET === $tokenType) {
+                    $count--;
+                }
+
+                if (0 === $count) {
+                    break;
+                }
+            }
+            $endToken = $tokenStack[$i];
+
+            $this->innerScope = $tokenStack->extractTokenStack($startToken->getIndex(), $endToken->getIndex());
         }
 
-        return $this->endToken;
+        return $this->innerScope;
     }
 }

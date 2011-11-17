@@ -67,4 +67,13 @@ class ClassToken extends AbstractTokenWithInnerScope
         return $functions;
     }
 
+    public function isAbstract()
+    {
+        $token = $this->getTokenStack()->findPreviousTokenByType(T_ANY, $this->getIndex() - 1, T_WHITESPACE);
+        if (false === $token) {
+            return false;
+        }
+
+        return T_ABSTRACT === $token->getType();
+    }
 }

@@ -130,7 +130,7 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         return new TokenStack($tokens);
     }
 
-    public function findNextTokenByType($type, $startIndex = null)
+    public function findFirstTokenByType($type, $direction, $startIndex = null, $excludedType = null)
     {
         // Make sure we get an array in the end
         $types = (array) $type;
@@ -141,14 +141,21 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
             $pattern->setStartIndex($startIndex);
         }
 
+        if (null !== $excludedType) {
+            $excludedTypes = (array) $excludedType;
+            foreach ($excludedTypes as $excludedType) {
+                $pattern->addExcludedTokenType($excludedType);
+            }
+        }
+
         foreach ($types as $type) {
-            $pattern->addTokenType($type);
+            $pattern->addAcceptedTokenType($type);
         }
 
         $query     = new SearchQuery($this);
         $resultSet = $query->addSearchPattern($pattern)
                            ->setLimit(1)
-                           ->setDirection(SearchQuery::FORWARD)
+                           ->setDirection($direction)
                            ->search();
 
         if (0 < count($resultSet)) {
@@ -156,6 +163,16 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         } else {
            return false;
         }
+    }
+
+    public function findNextTokenByType($type, $startIndex = null, $excludedType = null)
+    {
+        return $this->findFirstTokenByType($type, SearchQuery::FORWARD, $startIndex, $excludedType);
+    }
+
+    public function findPreviousTokenByType($type, $startIndex = null, $excludedType = null)
+    {
+        return $this->findFirstTokenByType($type, SearchQuery::BACKWARD, $startIndex, $excludedType);
     }
 
     public function getEndToken()

@@ -109,8 +109,13 @@ class File
         return $this->tokenStack;
     }
 
-    public function search(array $searchPatterns, $direction = SearchQuery::FORWARD)
+    public function search($searchPatterns, $direction = SearchQuery::FORWARD)
     {
+        // Make sure we have an array in the end
+        if (is_object($searchPatterns)) {
+            $searchPatterns = array($searchPatterns);
+        }
+
         $searchQuery = new SearchQuery($this->getTokenStack(), $searchPatterns, $this);
         $searchQuery->setDirection($direction);
 

@@ -32,6 +32,9 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 namespace PhpTokenToolkit\Token;
 
+use PhpTokenToolkit\Search\Pattern\CustomPattern as CustomSearchPattern;
+use PhpTokenToolkit\Search\Query as SearchQuery;
+
 /**
  * Class representing a T_CLASS token
  *
@@ -43,4 +46,25 @@ namespace PhpTokenToolkit\Token;
 class ClassToken extends AbstractTokenWithScope
 {
     protected $name = 'T_CLASS';
+
+    public function getFunctions()
+    {
+        $innerScope = $this->getInnerScope();
+
+        $searchPattern = new CustomSearchPattern();
+        $searchPattern->addTokenType(T_FUNCTION)
+                      ->setStartIndex($innerScope->getStartToken()->getIndex())
+                      ->setEndIndex($innerScope->getEndToken()->getIndex());
+
+        $query = new SearchQuery($this->getTokenStack(), $searchPattern);
+        $resultSet = $query->search();
+
+        $functions = array();
+        foreach ($resultSet as $result) {
+            $functions[] = $result->getToken();
+        }
+
+        return $functions;
+    }
+
 }

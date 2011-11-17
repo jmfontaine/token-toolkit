@@ -38,6 +38,13 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\Token\TokenInterface;
 
+// KLUDGE: T_ANY constant may not be defined yet by the time this file is loaded
+// depending on the order of the class instanciations so we have to define it if needed.
+// See also custom token constants in PhpTokenToolkit\Tokenizer\Php.php file.
+if (!defined('T_ANY')) {
+    define('T_ANY', 1000);
+}
+
 /**
  *
  *
@@ -49,6 +56,8 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 abstract class AbstractPattern implements SearchPatternInterface
 {
+    protected $acceptAnyTokenType = false;
+
     protected $acceptedTokenTypes = array();
 
     protected $content;
@@ -74,7 +83,9 @@ abstract class AbstractPattern implements SearchPatternInterface
 
     protected function addAcceptedTokenType($tokenType)
     {
-        if (!in_array($tokenType, $this->acceptedTokenTypes)) {
+        if (T_ANY === $tokenType) {
+            $this->acceptAnyTokenType = true;
+        } elseif (!in_array($tokenType, $this->acceptedTokenTypes)) {
             $this->acceptedTokenTypes[] = $tokenType;
         }
 
@@ -124,7 +135,11 @@ abstract class AbstractPattern implements SearchPatternInterface
             }
         }
 
-        if (!in_array($token->getType(), $this->acceptedTokenTypes)) {
+        if (!$this->acceptAnyTokenType && !in_array($token->getType(), $this->acceptedTokenTypes)) {
+            return false;
+        }
+
+        if (in_array($token->getType(), $this->excludedTokenTypes)) {
             return false;
         }
 

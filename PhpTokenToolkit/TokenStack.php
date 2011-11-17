@@ -105,11 +105,19 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         }
     }
 
+    protected function processTokens(array $tokens)
+    {
+        // TODO: Check tokens before using them
+        $this->tokens = $tokens;
+    }
+
     public function __construct($source, $eolCharacter = null)
     {
         if ($source instanceof File) {
             $this->file = $source;
             $this->processSourceFile($source);
+        } elseif (is_array($source)) {
+            $this->processTokens($source);
         } else {
             $this->processSourceString($source, $eolCharacter);
         }

@@ -123,6 +123,13 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         }
     }
 
+    public function extractTokenStack($startIndex, $endIndex)
+    {
+        $tokens = array_slice($this->tokens, $startIndex, $endIndex - $startIndex + 1);
+
+        return new TokenStack($tokens);
+    }
+
     public function findNextTokenByType($type, $startIndex = null)
     {
         // Make sure we get an array in the end

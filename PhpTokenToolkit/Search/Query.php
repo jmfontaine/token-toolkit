@@ -64,6 +64,10 @@ class Query
 
     public function __construct(TokenStack $tokenStack, $searchPatterns = array())
     {
+        if (is_object($searchPatterns)) {
+            $searchPatterns = array($searchPatterns);
+        }
+
         $this->searchPatterns = $searchPatterns;
         $this->tokenStack     = $tokenStack;
     }

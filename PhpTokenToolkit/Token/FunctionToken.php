@@ -42,5 +42,21 @@ namespace PhpTokenToolkit\Token;
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 class FunctionToken extends AbstractTokenWithScope
 {
+    protected $functionName;
+
     protected $name = 'T_FUNCTION';
+
+    public function getFunctionName()
+    {
+        if (null === $this->functionName) {
+            $token = $this->getTokenStack()
+                          ->findNextTokenByType(T_STRING, $this->getIndex());
+
+            if (false !== $token) {
+                $this->functionName = $token->getContent();
+            }
+        }
+
+        return $this->functionName;
+    }
 }

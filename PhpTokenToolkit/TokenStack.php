@@ -158,9 +158,21 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         }
     }
 
+    public function getEndToken()
+    {
+        $endTokenIndex = count($this->tokens) - 1;
+
+        return $this->tokens[$endTokenIndex];
+    }
+
     public function getFile()
     {
         return $this->file;
+    }
+
+    public function getStartToken()
+    {
+        return $this->tokens[0];
     }
 
     public function getTokenName(AbstractBaseToken $token)

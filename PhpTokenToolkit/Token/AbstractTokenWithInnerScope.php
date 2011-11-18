@@ -45,11 +45,11 @@ namespace PhpTokenToolkit\Token;
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 abstract class AbstractTokenWithInnerScope extends AbstractTokenWithoutInnerScope
 {
-    protected $innerScope;
-
     public function getInnerScope()
     {
-        if (null === $this->innerScope) {
+        static $innerScope = null;
+
+        if (null === $innerScope) {
             $tokenStack = $this->getTokenStack();
             $startToken = $tokenStack->findNextTokenByType(T_OPEN_CURLY_BRACKET, $this->getIndex());
 
@@ -69,9 +69,9 @@ abstract class AbstractTokenWithInnerScope extends AbstractTokenWithoutInnerScop
             }
             $endToken = $tokenStack[$i];
 
-            $this->innerScope = $tokenStack->extractTokenStack($startToken->getIndex(), $endToken->getIndex());
+            $innerScope = $tokenStack->extractTokenStack($startToken->getIndex(), $endToken->getIndex());
         }
 
-        return $this->innerScope;
+        return $innerScope;
     }
 }

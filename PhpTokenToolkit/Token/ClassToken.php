@@ -49,19 +49,23 @@ class ClassToken extends AbstractTokenWithInnerScope
 
     public function getFunctions()
     {
-        $innerScope = $this->getInnerScope();
+        static $functions = null;
 
-        $searchPattern = new CustomSearchPattern();
-        $searchPattern->addAcceptedTokenType(T_FUNCTION)
-                      ->setStartIndex($innerScope->getStartToken()->getIndex())
-                      ->setEndIndex($innerScope->getEndToken()->getIndex());
+        if (null === $functions) {
+            $innerScope = $this->getInnerScope();
 
-        $query = new SearchQuery($this->getTokenStack(), $searchPattern);
-        $resultSet = $query->search();
+            $searchPattern = new CustomSearchPattern();
+            $searchPattern->addAcceptedTokenType(T_FUNCTION)
+                          ->setStartIndex($innerScope->getStartToken()->getIndex())
+                          ->setEndIndex($innerScope->getEndToken()->getIndex());
 
-        $functions = array();
-        foreach ($resultSet as $result) {
-            $functions[] = $result->getToken();
+            $query = new SearchQuery($this->getTokenStack(), $searchPattern);
+            $resultSet = $query->search();
+
+            $functions = array();
+            foreach ($resultSet as $result) {
+                $functions[] = $result->getToken();
+            }
         }
 
         return $functions;
@@ -69,11 +73,17 @@ class ClassToken extends AbstractTokenWithInnerScope
 
     public function isAbstract()
     {
-        $token = $this->getTokenStack()->findPreviousTokenByType(T_ANY, $this->getIndex() - 1, T_WHITESPACE);
-        if (false === $token) {
-            return false;
+        static $isAbstract = null;
+
+        if (null === $isAbstract) {
+            $token = $this->getTokenStack()->findPreviousTokenByType(T_ANY, $this->getIndex() - 1, T_WHITESPACE);
+            if (false === $token) {
+                $isAbstract = false;
+            } else {
+                $isAbstract = T_ABSTRACT === $token->getType();
+            }
         }
 
-        return T_ABSTRACT === $token->getType();
+        return $isAbstract;
     }
 }

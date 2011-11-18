@@ -45,8 +45,6 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 class RequireToken extends AbstractTokenWithoutInnerScope
 {
-    protected $filePath;
-
     protected $name = 'T_REQUIRE';
 
     /**
@@ -54,16 +52,18 @@ class RequireToken extends AbstractTokenWithoutInnerScope
      */
     public function getFilePath()
     {
-        if (null === $this->filePath) {
+        static $filePath = null;
+
+        if (null === $filePath) {
             $token = $this->getTokenStack()
                           ->findNextTokenByType(T_CONSTANT_ENCAPSED_STRING, $this->getIndex());
 
             if (false !== $token) {
                 // Remove enclosing quotes before storing
-                $this->filePath = substr($token->getContent(), 1, -1);
+                $filePath = substr($token->getContent(), 1, -1);
             }
         }
 
-        return $this->filePath;
+        return $filePath;
     }
 }

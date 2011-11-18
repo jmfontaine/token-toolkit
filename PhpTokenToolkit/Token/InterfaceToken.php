@@ -45,21 +45,21 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License */
 class InterfaceToken extends AbstractTokenWithInnerScope
 {
-    protected $interfaceName;
-
     protected $name = 'T_INTERFACE';
 
     public function getInterfaceName()
     {
-        if (null === $this->interfaceName) {
+        static $interfaceName = null;
+
+        if (null === $interfaceName) {
             $token = $this->getTokenStack()
                           ->findNextTokenByType(T_STRING, $this->getIndex());
 
             if (false !== $token) {
-                $this->interfaceName = $token->getContent();
+                $interfaceName = $token->getContent();
             }
         }
 
-        return $this->interfaceName;
+        return $interfaceName;
     }
 }

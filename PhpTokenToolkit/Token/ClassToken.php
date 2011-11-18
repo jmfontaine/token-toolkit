@@ -86,4 +86,20 @@ class ClassToken extends AbstractTokenWithInnerScope
 
         return $isAbstract;
     }
+
+    public function isFinal()
+    {
+        static $isFinal = null;
+
+        if (null === $isFinal) {
+            $token = $this->getTokenStack()->findPreviousTokenByType(T_ANY, $this->getIndex() - 1, T_WHITESPACE);
+            if (false === $token) {
+                $isFinal = false;
+            } else {
+                $isFinal = T_FINAL === $token->getType();
+            }
+        }
+
+        return $isFinal;
+    }
 }

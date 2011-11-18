@@ -71,6 +71,29 @@ class ClassToken extends AbstractTokenWithInnerScope
         return $functions;
     }
 
+    public function getInterfaces()
+    {
+        static $interfaces = null;
+
+        if (null === $interfaces) {
+            $implementsToken = $this->getTokenStack()->findNextTokenByType(T_IMPLEMENTS, $this->getIndex() + 1);
+            if (false === $implementsToken) {
+                $interfaces = array();
+            } else {
+                $innerScopeStartIndex = $this->getInnerScope()->getStartToken()->getIndex();
+                $tokenStack           = $this->getTokenStack();
+                for ($i = $implementsToken->getIndex() + 1; $i < $innerScopeStartIndex; $i++) {
+                    $token = $tokenStack[$i];
+                    if (T_STRING === $token->getType()) {
+                        $interfaces[] = $token;
+                    }
+                }
+            }
+        }
+
+        return $interfaces;
+    }
+
     public function isAbstract()
     {
         static $isAbstract = null;

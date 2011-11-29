@@ -56,7 +56,7 @@ class Autoloader
         $class                 = ltrim($class, '\\');
         $filename              = '';
         $namespace             = '';
-        $lastNamespacePosition = strripos($class, '\\')
+        $lastNamespacePosition = strripos($class, '\\');
         if (false !== $lastNamespacePosition) {
             $namespace = substr($class, 0, $lastNamespacePosition);
             $class     = substr($class, $lastNamespacePosition + 1);

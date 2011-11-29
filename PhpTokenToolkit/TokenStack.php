@@ -139,6 +139,7 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
                 $token['startColumn'],
                 $token['endLine'],
                 $token['endColumn'],
+                $token['level'],
                 $this
             );
             $tokenIndex++;

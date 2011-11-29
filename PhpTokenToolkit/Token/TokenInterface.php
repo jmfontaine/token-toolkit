@@ -45,7 +45,7 @@ use PhpTokenToolkit\TokenStack;
 interface TokenInterface
 {
     public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, TokenStack $tokenStack);
+        $endLine, $endColumn, $level, TokenStack $tokenStack);
 
     public function getType();
 
@@ -56,6 +56,8 @@ interface TokenInterface
     public function getEndLine();
 
     public function getIndex();
+
+    public function getLevel();
 
     public function getName();
 

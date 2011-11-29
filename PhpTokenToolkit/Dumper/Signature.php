@@ -158,8 +158,7 @@ class Signature extends AbstractDumper
             $allowedTokenTypes = $basicTokenTypes;
         }
 
-        $result      = '';
-        $level       = 1;
+        $result = '';
         foreach ($tokenStack as $token) {
             $type           = $token->getType();
             $isExtendedType = array_key_exists($type, $extendedTokenTypes);
@@ -167,21 +166,11 @@ class Signature extends AbstractDumper
                 if (self::DISABLED === $colorMode) {
                     $result .= $allowedTokenTypes[$type];
                 } else {
-                    if (T_OPEN_CURLY_BRACKET === $type) {
-                        $level++;
-                    }
-
                     $result .= $this->colorize(
                         $allowedTokenTypes[$type],
-                        $isExtendedType ? -1 : $level,
+                        $isExtendedType ? -1 : $token->getLevel(),
                         $colorMode
                     );
-
-                    // Decrease level on closing brackets after it has been displayed
-                    // to have it the same color as the scope it closes.
-                    if (T_CLOSE_CURLY_BRACKET === $type) {
-                        $level--;
-                    }
                 }
             }
         }

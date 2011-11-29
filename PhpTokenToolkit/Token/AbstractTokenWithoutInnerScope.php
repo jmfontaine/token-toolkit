@@ -54,6 +54,8 @@ abstract class AbstractTokenWithoutInnerScope implements TokenInterface
 
     protected $index;
 
+    protected $level;
+
     protected $name = 'THIS MUST BE DEFINED IN CONCRETE CLASSES';
 
     protected $startColumn;
@@ -63,7 +65,7 @@ abstract class AbstractTokenWithoutInnerScope implements TokenInterface
     protected $tokenStack;
 
     public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, TokenStack $tokenStack)
+        $endLine, $endColumn, $level, TokenStack $tokenStack)
     {
         $this->index       = $index;
         $this->content     = $content;
@@ -71,6 +73,7 @@ abstract class AbstractTokenWithoutInnerScope implements TokenInterface
         $this->startColumn = $startColumn;
         $this->endLine     = $endLine;
         $this->endColumn   = $endColumn;
+        $this->level       = $level;
         $this->tokenStack  = $tokenStack;
     }
 
@@ -97,6 +100,11 @@ abstract class AbstractTokenWithoutInnerScope implements TokenInterface
     public function getIndex()
     {
         return $this->index;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
     }
 
     public function getName()

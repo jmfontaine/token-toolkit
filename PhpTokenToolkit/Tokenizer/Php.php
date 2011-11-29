@@ -196,6 +196,7 @@ class Php
         $tokenEndColumn       = 1;
         $nextTokenStartLine   = 1;
         $nextTokenStartColumn = 1;
+        $level                = 1;
         foreach ($rawTokens as $rawToken) {
             // We do not reprocess already processed tokens
             // except if they are strings.
@@ -253,6 +254,11 @@ class Php
                 $nextTokenStartColumn = $tokenEndColumn + 1;
             }
 
+            // Increase level on opening curly brackets
+            if (T_OPEN_CURLY_BRACKET === $tokenType) {
+                $level++;
+            }
+
             // Finally add the token to the stack
             $tokens[] = array(
                 'type'        => $tokenType,
@@ -260,8 +266,15 @@ class Php
                 'startLine'   => $tokenStartLine,
                 'startColumn' => $tokenStartColumn,
                 'endLine'     => $tokenEndLine,
-                'endColumn'   => $tokenEndColumn
+                'endColumn'   => $tokenEndColumn,
+                'level'       => $level,
             );
+
+            // Decrease level on closing brackets after it has been added to the array
+            // so that it has the same level as the scope is closes.
+            if (T_CLOSE_CURLY_BRACKET === $tokenType) {
+                $level--;
+            }
         }
 
         return $tokens;

@@ -41,24 +41,50 @@ use PhpTokenToolkit\Token\TokenInterface;
 use PhpTokenToolkit\Tokenizer\Php as PhpTokenizer;
 
 /**
- * Stack of PHP tokens for a string
+ * This class allows to manipulate a stack of tokens extracted for PHP Code.
  *
  * @package    PhpTokenToolkit
  * @subpackage TokenStack
- * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright  2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @author     Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 {
+    /**
+     * Instance of PHPTokenTookit\File\File in case the stack has been built from a file
+     *
+     * @var PHPTokenTookit\File\File
+     */
     protected $file;
 
+    /**
+     * Cursor used for tokens iteration
+     *
+     * @var int
+     */
     protected $iteratorCursor = 0;
 
+    /**
+     * Tokenizer used to tokenize source code
+     *
+     * @var PHPTokenTookit\Tokenizer\Php
+     */
     protected $tokenizer;
 
+    /**
+     * Array of tokens extracted for the source code
+     *
+     * @var array of PHPTokenTookit\Token\TokenInterface
+     */
     protected $tokens = array();
 
+    /**
+     * Returns the name of the class corresponding to a token type.
+     *
+     * @param int $tokenType Type of the token to retrieve class for
+     * @return string Name of the class
+     */
     protected function getTokenClass($tokenType)
     {
         $tokenType = substr($tokenType, 2);
@@ -73,14 +99,28 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         return $result;
     }
 
+    /**
+     * Extracts a PHP token stack from a PHPTokenTookit\File\File instance.
+     *
+     * @param PHPTokenTookit\File\File $file Source file
+     * @return void
+     */
     protected function processSourceFile(File $file)
     {
         $content      = $file->getSource();
         $eolCharacter = $file->getEolCharacter();
 
-        return $this->processSourceString($content, $eolCharacter);
+        $this->processSourceString($content, $eolCharacter);
     }
 
+    /**
+     * Extracts a PHP token stack from a string.
+     *
+     * @param string $source Source code to extract tokens from
+     * @param string $eolCharacter End of line character
+     * @throws \InvalidArgumentException If source is not a string
+     * @return void
+     */
     protected function processSourceString($source, $eolCharacter = "\n")
     {
         if (!is_string($source)) {
@@ -105,12 +145,26 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         }
     }
 
+    /**
+     * Sets PHP tokens from an array.
+     *
+     * @param array $tokens Array of tokens
+     * @return void
+     */
     protected function processTokens(array $tokens)
     {
         // TODO: Check tokens before using them
         $this->tokens = $tokens;
     }
 
+    /**
+     * Class constructor. Loads tokens from a source that can be an instance of PHPTokenTookit\File\File,
+     * a string or an array of tokens.
+     *
+     * @param string $source Source code to extract tokens from
+     * @param string $eolCharacter End of line character
+     * @return void
+     */
     public function __construct($source, $eolCharacter = null)
     {
         if ($source instanceof File) {
@@ -123,6 +177,13 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         }
     }
 
+    /**
+     * Returns a part of the token stack.
+     *
+     * @param int $startIndex Start index for the extraction
+     * @param int $endIndex End index for the extraction
+     * @return PHPTokenTookit\TokenStack The extracted token stack
+     */
     public function extractTokenStack($startIndex, $endIndex)
     {
         $tokens = array_slice($this->tokens, $startIndex, $endIndex - $startIndex + 1);
@@ -130,6 +191,17 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         return new TokenStack($tokens);
     }
 
+    /**
+     * Returns first encountered token matching the criteria. If none is found then false is returned.
+     *
+     * @param int|array $type Type or array of types the token must match.
+     * @param int $direction Direction of the search. It can be either PhpTokenToolkit\Search\Query::BACKWARD
+     *                       or PhpTokenToolkit\Search\Query::FORWARD.
+     * @param int $startIndex Index of the token to start the search from
+     * @param int $endIndex Index of the token where to end the search
+     * @param int|array $excludedType Type or array of types the token must not match.
+     * @return
+     */
     public function findFirstTokenByType($type, $direction, $startIndex = null, $endIndex = null, $excludedType = null)
     {
         // Make sure we get an array in the end
@@ -179,6 +251,10 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         return $this->findFirstTokenByType($type, SearchQuery::BACKWARD, $startIndex, $endIndex, $excludedType);
     }
 
+    /**
+     *
+     * @return PhpTokenToolkit\Token\Token Token ending the stack
+     */
     public function getEndToken()
     {
         $endTokenIndex = count($this->tokens) - 1;
@@ -191,6 +267,10 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         return $this->file;
     }
 
+    /**
+     *
+     * @return PhpTokenToolkit\Token\Token Token starting the stack
+     */
     public function getStartToken()
     {
         return $this->tokens[0];

@@ -34,6 +34,7 @@ namespace PhpTokenToolkit\File;
 
 use PhpTokenToolkit\File\Iterator\ExcludeFilterIterator;
 use PhpTokenToolkit\File\Iterator\FileIterator;
+use PhpTokenToolkit\File\Iterator\FileExtensionFilterIterator;
 use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Search\Result\ResultSet;
 
@@ -48,6 +49,13 @@ use PhpTokenToolkit\Search\Result\ResultSet;
  */
 class FileSet implements \IteratorAggregate
 {
+    private $allowedExtensions = array(
+        '.php',
+        '.php3',
+        '.php4',
+        '.php5',
+    );
+
     protected $directories = array();
 
     protected $exclude = array();
@@ -80,6 +88,13 @@ class FileSet implements \IteratorAggregate
         }
     }
 
+    public function addAllowedExtension($extension)
+    {
+        $this->allowedExtensions[] = $extension;
+
+        return $this;
+    }
+
     public function addPath($path)
     {
         foreach ((array) $path as $item) {
@@ -100,6 +115,11 @@ class FileSet implements \IteratorAggregate
         return $this;
     }
 
+    public function getAllowedExtensions()
+    {
+        return $this->allowedExtensions;
+    }
+
     public function search(array $searchPatterns, $direction = SearchQuery::FORWARD)
     {
         $resultSet = new ResultSet();
@@ -111,6 +131,13 @@ class FileSet implements \IteratorAggregate
         }
 
         return $resultSet;
+    }
+
+    public function setAllowedExtensions(array $extensions)
+    {
+        $this->allowedExtensions = $extensions;
+
+        return $this;
     }
 
     public function setPath($path)
@@ -138,6 +165,9 @@ class FileSet implements \IteratorAggregate
         if (!empty($this->exclude)) {
             $iterator = new ExcludeFilterIterator($iterator, $this->exclude);
         }
+
+        $iterator = new FileExtensionFilterIterator($iterator);
+        $iterator->setAllowedExtensions($this->allowedExtensions);
 
         return $iterator;
     }

@@ -85,6 +85,16 @@ class File
         return $this->eolCharacter;
     }
 
+    public function getExtension()
+    {
+        $lastColonPosition = strrpos($this->path, '.');
+        if (false === $lastColonPosition) {
+            return '';
+        }
+
+        return substr($this->path, $lastColonPosition);
+    }
+
     public function getPath()
     {
         return $this->path;

@@ -54,6 +54,53 @@ use PhpTokenToolkit\Token\TokenInterface;
  */
 class Signature extends AbstractDumper
 {
+    const BASIC    = 'basic';
+    const EXTENDED = 'extended';
+
+    const BASH     = 'bash';
+    const DISABLED = 'disabled';
+    const HTML     = 'html';
+
+    private $style = self::BASIC;
+
+    private $colorMode = self::DISABLED;
+
+    private function colorize($text, $level, $colorMode)
+    {
+        switch ($colorMode) {
+            case self::BASH:
+                if (-1 === $level) {
+                    $prefix = "\033[37m";
+                } elseif (3 > $level) {
+                    $prefix = "\033[32m";
+                } elseif (4 > $level) {
+                    $prefix = "\033[33m";
+                } else {
+                    $prefix = "\033[31m";
+                }
+                $suffix = "\033[0m";
+                break;
+
+            case self:HTML:
+                if (-1 === $level) {
+                    $prefix = '<span style="color:#FFF">';
+                } elseif (3 > $level) {
+                    $prefix = '<span style="color:#0F0">';
+                } elseif (4 > $level) {
+                    $prefix = '<span style="color:#FFA500">';
+                } else {
+                    $prefix = '<span style="color:#F00">';
+                }
+                $suffix = '</span>';
+                break;
+
+            default:
+                throw new \RuntimeException("Invalid color mode ($colorMode)");
+        }
+
+        return $prefix . $text . $suffix;
+    }
+
     public function dumpFile(File $file)
     {
         return sprintf(
@@ -91,18 +138,88 @@ class Signature extends AbstractDumper
 
     public function dumpTokenStack(TokenStack $tokenStack)
     {
-        $allowedTokenTypes = array(
-            T_OPEN_CURLY_BRACKET,
-            T_CLOSE_CURLY_BRACKET,
-            T_SEMICOLON,
+        $basicTokenTypes = array(
+            T_OPEN_CURLY_BRACKET  => '{',
+            T_CLOSE_CURLY_BRACKET => '}',
+            T_SEMICOLON           => ';',
         );
-        $result = '';
+
+        $extendedTokenTypes = array(
+            T_CLASS    => 'C',
+            T_FUNCTION => 'F',
+        );
+
+        $colorMode = $this->getColorMode();
+        $style     = $this->getStyle();
+
+        if (self::EXTENDED === $style) {
+            $allowedTokenTypes = $basicTokenTypes + $extendedTokenTypes;
+        } else {
+            $allowedTokenTypes = $basicTokenTypes;
+        }
+
+        $result      = '';
+        $level       = 1;
         foreach ($tokenStack as $token) {
-            if (in_array($token->getType(), $allowedTokenTypes)) {
-                $result .= $token->getContent();
+            $type           = $token->getType();
+            $isExtendedType = array_key_exists($type, $extendedTokenTypes);
+            if (array_key_exists($type, $allowedTokenTypes)) {
+                if (self::DISABLED === $colorMode) {
+                    $result .= $allowedTokenTypes[$type];
+                } else {
+                    if (T_OPEN_CURLY_BRACKET === $type) {
+                        $level++;
+                    }
+
+                    $result .= $this->colorize(
+                        $allowedTokenTypes[$type],
+                        $isExtendedType ? -1 : $level,
+                        $colorMode
+                    );
+
+                    // Decrease level on closing brackets after it has been displayed
+                    // to have it the same color as the scope it closes.
+                    if (T_CLOSE_CURLY_BRACKET === $type) {
+                        $level--;
+                    }
+                }
             }
         }
 
         return $result;
+    }
+
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    public function getColorMode()
+    {
+        return $this->colorMode;
+    }
+
+    public function setColorMode($colorMode)
+    {
+        $allowedColorModes = array(self::BASH, self::HTML, self::DISABLED);
+
+        if (!in_array($colorMode, $allowedColorModes)) {
+            throw new \InvalidArgumentException("Invalid color mode ($colorMode)");
+        }
+
+        $this->colorMode = $colorMode;
+
+        return $this;
+    }
+
+    public function setStyle($style)
+    {
+        if (self::BASIC !== $style && self::EXTENDED !== $style) {
+            throw new \InvalidArgumentException("Invalid style ($style)");
+        }
+
+        $this->style = $style;
+
+        return $this;
     }
 }

@@ -43,4 +43,14 @@ namespace PhpTokenToolkit\Token;
 class ConstantEncapsedStringToken extends AbstractTokenWithoutInnerScope
 {
     protected $name = 'T_CONSTANT_ENCAPSED_STRING';
+
+    public function getContent()
+    {
+        return substr(parent::getContent(), 1, -1);
+    }
+
+    public function getRawContent()
+    {
+        return parent::getContent();
+    }
 }

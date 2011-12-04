@@ -120,7 +120,7 @@ class FileSet implements \IteratorAggregate
         return $this->allowedExtensions;
     }
 
-    public function search(array $searchPatterns, $direction = SearchQuery::FORWARD)
+    public function search($searchPatterns, $direction = SearchQuery::FORWARD)
     {
         $resultSet = new ResultSet();
 

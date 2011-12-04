@@ -36,13 +36,7 @@ namespace PhpTokenToolkit\Tokenizer;
 if (!defined('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED')) {
     define('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED', true);
 
-    // KLUDGE: T_ANY constant may be already defined by the time this file is loaded
-    // depending on the order of the class instanciations so we have to define it only if needed.
-    // See also PhpTokenToolkit\Search\Pattern\AbstractPattern.php file.
-    if (!defined('T_ANY')) {
-        define('T_ANY', 1000);
-    }
-
+    define('T_ANY'                 , 1000);
     define('T_NULL'                , 1001);
     define('T_FALSE'               , 1002);
     define('T_TRUE'                , 1003);

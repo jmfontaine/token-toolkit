@@ -38,12 +38,10 @@ use PhpTokenToolkit\Search\Query as SearchQuery;
 use PhpTokenToolkit\Search\Pattern\PatternInterface as SearchPatternInterface;
 use PhpTokenToolkit\Token\TokenInterface;
 
-// KLUDGE: T_ANY constant may not be defined yet by the time this file is loaded
-// depending on the order of the class instanciations so we have to define it if needed.
-// See also custom token constants in PhpTokenToolkit\Tokenizer\Php.php file.
-if (!defined('T_ANY')) {
-    define('T_ANY', 1000);
-}
+// KLUDGE: We need to include the PHP tokenizer file to make sure that custom constants are defined.
+// Otherwise it may not be loaded yet by the time this file is loaded depending on the order
+// of the classes instanciations.
+require_once 'PhpTokenToolkit/Tokenizer/Php.php';
 
 /**
  *

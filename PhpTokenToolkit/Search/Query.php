@@ -93,8 +93,13 @@ class Query
     {
         $resultSet = new ResultSet();
 
-        $resultsCount = 0;
         $tokensCount  = count($this->getTokenStack());
+
+        // If the stack is empty return now
+        if (0 === $tokensCount) {
+            return $resultSet;
+        }
+
         if (self::FORWARD === $this->direction) {
             $startIndex = 0;
             $endIndex   = $tokensCount - 1;
@@ -103,6 +108,7 @@ class Query
             $endIndex   = 0;
         }
 
+        $resultsCount = 0;
         for ($i = $startIndex; ;) {
             $token = $this->tokenStack[$i];
 

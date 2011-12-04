@@ -313,7 +313,7 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
 
     public function offsetExists($offset)
     {
-        return isset($this->tokens[$offset]);
+        return array_key_exists($offset, $this->tokens);
     }
 
     public function offsetGet($offset)

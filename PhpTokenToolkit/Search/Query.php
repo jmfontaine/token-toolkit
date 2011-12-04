@@ -134,22 +134,6 @@ class Query
             }
         }
 
-
-        /*$count = 0;
-        reset($this->tokenStack);
-        foreach ($this->tokenStack as $token) {
-            foreach ($this->searchPatterns as $pattern) {
-                if ($pattern->match($token)) {
-                    $resultSet->add(new Result($token, $pattern));
-                    $count++;
-
-                    if (null !== $this->limit && $count >= $this->limit) {
-                        break 2;
-                    }
-                }
-            }
-        }*/
-
         return $resultSet;
     }
 

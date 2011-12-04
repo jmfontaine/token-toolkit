@@ -65,6 +65,7 @@ if (!defined('PHP_TOKEN_TOOLKIT_CUSTOM_TOKENS_DEFINED')) {
     define('T_BITWISE_AND'         , 1026);
     define('T_BITWISE_OR'          , 1027);
     define('T_BACKTICK'            , 1028);
+    define('T_ERROR_CONTROL'       , 1029);
 }
 
 /**
@@ -111,6 +112,7 @@ class Php
         '&'      => T_BITWISE_AND,
         '|'      => T_BITWISE_OR,
         '`'      => T_BACKTICK,
+        '@'      => T_ERROR_CONTROL,
      );
 
     protected $customTokensNames = array(
@@ -142,6 +144,7 @@ class Php
         T_BITWISE_AND          => 'T_BITWISE_AND',
         T_BITWISE_OR           => 'T_BITWISE_OR',
         T_BACKTICK             => 'T_BACKTICK',
+        T_ERROR_CONTROL        => 'T_ERROR_CONTROL',
     );
 
     protected $multilineTokens = array(

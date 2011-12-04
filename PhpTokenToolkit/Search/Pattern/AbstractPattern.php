@@ -147,11 +147,11 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setContent($content, $isRegex = false)
     {
         if (!is_string($content)) {
-            throw \InvalidArgumentException("Invalid content ($content)");
+            throw new \InvalidArgumentException("Invalid content ($content)");
         }
 
         if (!is_bool($isRegex)) {
-            throw \InvalidArgumentException("Invalid boolean value ($isRegex)");
+            throw new \InvalidArgumentException("Invalid boolean value ($isRegex)");
         }
 
         $this->content        = $content;
@@ -163,7 +163,7 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setEndIndex($index)
     {
         if (!is_int($index) || 0 > $index) {
-            throw \InvalidArgumentException("Invalid end index ($index)");
+            throw new \InvalidArgumentException("Invalid end index ($index)");
         }
 
         $this->endIndex = $index;
@@ -174,7 +174,7 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setEndLine($line)
     {
         if (!is_int($line) || 1 > $line) {
-            throw \InvalidArgumentException("Invalid end line ($line)");
+            throw new \InvalidArgumentException("Invalid end line ($line)");
         }
 
         $this->endLine = $line;
@@ -185,7 +185,7 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setName($name)
     {
         if (!is_string($name)) {
-            throw \InvalidArgumentException("Invalid name ($name)");
+            throw new \InvalidArgumentException("Invalid name ($name)");
         }
 
         $this->name = $name;
@@ -196,7 +196,7 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setStartIndex($index)
     {
         if (!is_int($index) || 0 > $index) {
-            throw \InvalidArgumentException("Invalid start index ($index)");
+            throw new \InvalidArgumentException("Invalid start index ($index)");
         }
 
         $this->startIndex = $index;
@@ -207,7 +207,7 @@ abstract class AbstractPattern implements SearchPatternInterface
     public function setStartLine($line)
     {
         if (!is_int($line) || 1 > $line) {
-            throw \InvalidArgumentException("Invalid start line ($line)");
+            throw new \InvalidArgumentException("Invalid start line ($line)");
         }
 
         $this->startLine = $line;

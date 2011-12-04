@@ -58,6 +58,8 @@ abstract class AbstractPattern implements SearchPatternInterface
 
     protected $acceptedTokenTypes = array();
 
+    protected $callback;
+
     protected $content;
 
     protected $contentIsRegex = false;
@@ -141,7 +143,22 @@ abstract class AbstractPattern implements SearchPatternInterface
             return false;
         }
 
+        if (null !== $this->callback) {
+            return call_user_func($this->callback, $token);
+        }
+
         return true;
+    }
+
+    public function setCallback($callback)
+    {
+        if ('Closure' !== get_class($callback)) {
+            throw new \InvalidArgumentException("Callback must be a closure");
+        }
+
+        $this->callback = $callback;
+
+        return $this;
     }
 
     public function setContent($content, $isRegex = false)

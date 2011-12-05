@@ -154,8 +154,26 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
      */
     protected function processTokens(array $tokens)
     {
-        // TODO: Check tokens before using them
-        $this->tokens = $tokens;
+        $newTokens = array();
+        foreach ($tokens as $token) {
+            if (!$token instanceof TokenInterface) {
+                throw new \InvalidArgumentException('An array of tokens must be passed as an argument');
+            }
+
+            $class = get_class($token);
+            $newTokens[] = new $class(
+                $token->getIndex(),
+                $token->getContent(),
+                $token->getStartLine(),
+                $token->getStartColumn(),
+                $token->getEndLine(),
+                $token->getEndColumn(),
+                $token->getLevel(),
+                $this
+            );
+        }
+
+        $this->tokens = $newTokens;
     }
 
     /**

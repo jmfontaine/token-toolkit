@@ -159,12 +159,20 @@ class Php
         T_WHITESPACE,
     );
 
+    /**
+     * Returns token name from token code
+     *
+     * @param int $tokenCode Token code
+     *
+     * @throws \InvalidArgumentException If the token code is unknown
+     * @return string Token name
+     */
     public function getTokenName($tokenCode)
     {
         // First try to get the PHP token name
         $tokenName = token_name($tokenCode);
 
-        // If PHP doesn't know it then it should be a custom token
+        // If PHP doesn't know it then it may be a custom token
         if ('UNKNOWN' === $tokenName) {
             if (array_key_exists($tokenCode, $this->customTokensNames)) {
                 $tokenName = $this->customTokensNames[$tokenCode];
@@ -179,6 +187,14 @@ class Php
         return $tokenName;
     }
 
+    /**
+     * Parses a string and returns an array based on PHP tokenizer but augmented with additional data.
+     *
+     * @param string $string       String to parse
+     * @param string $eolCharacter Line ending character for the string
+     *
+     * @return array Array containing tokens informations
+     */
     public function getTokens($string, $eolCharacter = "\n")
     {
         // Retrieve raw tokens

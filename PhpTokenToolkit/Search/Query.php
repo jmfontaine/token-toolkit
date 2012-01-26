@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2011, Jean-Marc Fontaine
+ * Copyright (c) 2011-2012, Jean-Marc Fontaine
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
  * @package PhpTokenToolkit
  * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
@@ -46,7 +46,7 @@ use PhpTokenToolkit\TokenStack;
  * @package PhpTokenToolkit
  * @subpackage Search
  * @author Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Query

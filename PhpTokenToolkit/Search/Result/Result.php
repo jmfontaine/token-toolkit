@@ -76,7 +76,7 @@ class Result
 
         return array(
             'searchPattern' => $this->getSearchPattern()->getName(),
-            'file'          => $filePath,
+            'file'          => realpath($filePath),
             'token'         => $token->toArray(),
         );
     }

@@ -1,8 +1,3 @@
-# Eclipse
-/.settings
-/.buildpath
-/.project
-
 # PHP Token Toolkit
 /docs/*
 

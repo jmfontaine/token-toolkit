@@ -1,4 +1,5 @@
-# Eclipse
-/.settings
-/.buildpath
-/.project
+# PHP Token Toolkit
+/docs/*
+
+# Git
+!.gitkeep

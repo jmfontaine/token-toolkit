@@ -1,9 +1,9 @@
 {
-    "name": "jmfontaine/php-token-toolkit",
+    "name": "jmfontaine/token-toolkit",
     "type": "library",
     "description": "A library to manipulate PHP tokens",
     "keywords": ["token"],
-    "homepage": "http://github.com/jmfontaine/php-token-toolkit",
+    "homepage": "http://github.com/jmfontaine/token-toolkit",
     "license": "BSD",
     "authors": [
         {

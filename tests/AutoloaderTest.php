@@ -25,17 +25,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   PhpTokenToolkit
+ * @package   TokenToolkit
  * @subpackage Tests
  * @author    Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\Tests;
+namespace TokenToolkit\Tests;
 
-use PhpTokenToolkit\Autoloader;
-use PhpTokenToolkit\TokenStack;
+use TokenToolkit\Autoloader;
+use TokenToolkit\TokenStack;
 
 class AutoloaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,7 +81,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
         $autoloader->register();
 
         $stack = new TokenStack('<?php $a = "dummy"; ?>');
-        $this->assertSame('PhpTokenToolkit\TokenStack', get_class($stack));
+        $this->assertSame('TokenToolkit\TokenStack', get_class($stack));
     }
 
     /*

@@ -3,7 +3,7 @@ SCRIPT_PATH=$(cd ${0%/*}; pwd);
 ROOT_PATH=$SCRIPT_PATH/..
 
 docblox run \
-    -d $ROOT_PATH/PhpTokenToolkit \
+    -d $ROOT_PATH/TokenToolkit \
     -t $ROOT_PATH/docs \
     -p \
     --title="PHP Token Toolkit"

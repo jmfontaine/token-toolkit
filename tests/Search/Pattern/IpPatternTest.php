@@ -25,18 +25,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * @package   PhpTokenToolkit
+ * @package   TokenToolkit
  * @subpackage Tests
  * @author    Jean-Marc Fontaine <jm@jmfontaine.net>
  * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PhpTokenToolkit\Tests\Search\Pattern;
+namespace TokenToolkit\Tests\Search\Pattern;
 
-use PhpTokenToolkit\Search\Pattern\IpPattern;
-use PhpTokenToolkit\Search\Query as SearchQuery;
-use PhpTokenToolkit\TokenStack;
+use TokenToolkit\Search\Pattern\IpPattern;
+use TokenToolkit\Search\Query as SearchQuery;
+use TokenToolkit\TokenStack;
 
 class IpPatternTest extends \PHPUnit_Framework_TestCase
 {

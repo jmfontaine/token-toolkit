@@ -6,4 +6,4 @@ docblox run \
     -d $ROOT_PATH/TokenToolkit \
     -t $ROOT_PATH/docs \
     -p \
-    --title="PHP Token Toolkit"
+    --title="Token Toolkit"

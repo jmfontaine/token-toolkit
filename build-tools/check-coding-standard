@@ -3,5 +3,6 @@ SCRIPT_PATH=$(cd ${0%/*}; pwd);
 ROOT_PATH=$SCRIPT_PATH/..
 
 phpcs \
-    --standard=$SCRIPT_PATH/coding-standard/Symfony2/ruleset.xml \
-    $ROOT_PATH/TokenToolkit
+    --standard=PSR2 \
+    $ROOT_PATH/src \
+    $ROOT_PATH/tests

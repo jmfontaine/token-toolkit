@@ -123,14 +123,15 @@ class ResultSet implements \ArrayAccess, \Countable, \SeekableIterator
      * (non-PHPdoc)
      * @see SeekableIterator::seek()
      */
-    public function seek($position) {
-      $this->iteratorCursor = $position;
+    public function seek($position)
+    {
+        $this->iteratorCursor = $position;
 
-      if (!$this->valid()) {
-          throw new \OutOfBoundsException("Invalid seek position ($position)");
-      }
+        if (!$this->valid()) {
+            throw new \OutOfBoundsException("Invalid seek position ($position)");
+        }
 
-      return $this;
+        return $this;
     }
 
     /*

@@ -31,7 +31,7 @@ abstract class AbstractTokenWithInnerScope extends AbstractTokenWithoutInnerScop
             $startToken = $tokenStack->findNextTokenByType(T_OPEN_CURLY_BRACKET, $this->getIndex());
 
             $count = 1;
-            for ($i = $startToken->getIndex() + 1; ; $i++) {
+            for ($i = $startToken->getIndex() + 1; /* Ommited on purpose */; $i++) {
                 $tokenType = $tokenStack[$i]->getType();
 
                 if (T_OPEN_CURLY_BRACKET === $tokenType) {

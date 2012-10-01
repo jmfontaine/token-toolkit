@@ -18,7 +18,7 @@ namespace TokenToolkit\Search\Pattern;
  * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class CommentsPattern extends AbstractPattern
+class StringsPattern extends AbstractPattern
 {
     public function __construct()
     {

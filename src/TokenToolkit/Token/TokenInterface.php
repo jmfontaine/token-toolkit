@@ -21,8 +21,16 @@ use TokenToolkit\TokenStack;
  */
 interface TokenInterface
 {
-    public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, $level, TokenStack $tokenStack);
+    public function __construct(
+        $index,
+        $content,
+        $startLine,
+        $startColumn,
+        $endLine,
+        $endColumn,
+        $level,
+        TokenStack $tokenStack
+    );
 
     public function getType();
 

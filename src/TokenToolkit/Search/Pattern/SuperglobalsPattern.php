@@ -35,10 +35,10 @@ class SuperglobalsPattern extends AbstractPattern
         }
 
         $superglobalsNames = array(
-        	'$_COOKIE',
+            '$_COOKIE',
             '$_ENV',
             '$_FILES',
-        	'$_GET',
+            '$_GET',
             '$_POST',
             '$_REQUEST',
             '$_SERVER',

@@ -10,11 +10,6 @@
 
 namespace TokenToolkit\Search\Pattern;
 
-// KLUDGE: We need to include the PHP tokenizer file to make sure that custom constants are defined.
-// Otherwise it may not be loaded yet by the time this file is loaded depending on the order
-// of the classes instanciations.
-require_once 'TokenToolkit/Tokenizer/Php.php';
-
 /**
  *
  *

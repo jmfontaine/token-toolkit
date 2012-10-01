@@ -198,7 +198,7 @@ class Php
                 if (is_array($rawToken)) {
                     $tokenContent = $rawToken[1];
                 } else {
-                // Raw strings
+                    // Raw strings
                     $tokenContent = $rawToken;
                 }
 
@@ -206,7 +206,7 @@ class Php
                 if (array_key_exists(strtolower($tokenContent), $this->simpleCustomTokens)) {
                     $tokenType = $this->simpleCustomTokens[strtolower($tokenContent)];
                 } else {
-                // ... else consider it a simple string.
+                    // ... else consider it a simple string.
                     $tokenType = T_STRING;
                 }
             }

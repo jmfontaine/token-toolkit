@@ -47,7 +47,7 @@ class FileSet implements \IteratorAggregate
         );
 
         $files = array();
-        foreach($iterator as $item) {
+        foreach ($iterator as $item) {
             if ($item->isFile()) {
                 $files[] = $item->getPathname();
             }

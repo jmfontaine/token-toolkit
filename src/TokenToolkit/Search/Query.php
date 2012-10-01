@@ -84,7 +84,7 @@ class Query
         }
 
         $resultsCount = 0;
-        for ($i = $startIndex; ;) {
+        for ($i = $startIndex; /* Ommited on purpose */; /* Ommited on purpose */) {
             $token = $this->tokenStack[$i];
 
             foreach ($this->searchPatterns as $pattern) {

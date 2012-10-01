@@ -57,7 +57,7 @@ class IpPatternTest extends \PHPUnit_Framework_TestCase
              */
             /*
             // Dotted Hexadecimal notation
-			'0xC0.0x00.0x02.0xEB' => true,
+            '0xC0.0x00.0x02.0xEB' => true,
 
             // Dotted Octal notation
             '0300.0000.0002.0353' => true,
@@ -73,9 +73,9 @@ class IpPatternTest extends \PHPUnit_Framework_TestCase
             */
 
             // Garbage
-			''      => false,
+            ''      => false,
             '42'    => false,
-        	'dummy' => false,
+            'dummy' => false,
         );
 
         foreach ($data as $ip => $isValid) {
@@ -97,7 +97,7 @@ class IpPatternTest extends \PHPUnit_Framework_TestCase
             '2001:00db8:0000:0000:0000:0000:1428:57ab' => false,
             '2001:0db8:xxxx:0000:0000:0000:1428:57ab'  => false,
 
-        	'2001:db8::1428:57ab'  => true,
+            '2001:db8::1428:57ab'  => true,
             '2001:db8::1428::57ab' => false,
             '2001:dx0::1234'       => false,
             '2001:db0::12345'      => false,
@@ -109,7 +109,7 @@ class IpPatternTest extends \PHPUnit_Framework_TestCase
             '::1'  => true,
             ':::1' => false,
 
-        	'::1.2.3.4'             => true,
+            '::1.2.3.4'             => true,
             '::256.0.0.1'           => false,
             '::01.02.03.04'         => false,
             'a:b:c::1.2.3.4'        => true,
@@ -181,9 +181,9 @@ class IpPatternTest extends \PHPUnit_Framework_TestCase
             'a:b:c:d:e:f::'    => true,
 
             // Garbage
-			''      => false,
+            ''      => false,
             '42'    => false,
-        	'dummy' => false,
+            'dummy' => false,
         );
 
         foreach ($data as $ip => $isValid) {

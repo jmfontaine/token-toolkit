@@ -41,9 +41,16 @@ abstract class AbstractTokenWithoutInnerScope implements TokenInterface
 
     protected $tokenStack;
 
-    public function __construct($index, $content, $startLine, $startColumn,
-        $endLine, $endColumn, $level, TokenStack $tokenStack)
-    {
+    public function __construct(
+        $index,
+        $content,
+        $startLine,
+        $startColumn,
+        $endLine,
+        $endColumn,
+        $level,
+        TokenStack $tokenStack
+    ) {
         $this->index       = $index;
         $this->content     = $content;
         $this->startLine   = $startLine;

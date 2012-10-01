@@ -23,11 +23,13 @@ class FunctionCallPattern extends AbstractPattern
     public function __construct($functionName = null)
     {
         $this->addAcceptedTokenType(T_STRING)
-             ->setCallback(function ($token) {
-                $nextToken = $token->getTokenStack()
-                                   ->findNextTokenByType(T_ANY, $token->getIndex() + 1, null, T_WHITESPACE);
-                return T_OPEN_PARENTHESIS === $nextToken->getType();
-             });
+             ->setCallback(
+                 function ($token) {
+                    $nextToken = $token->getTokenStack()
+                                           ->findNextTokenByType(T_ANY, $token->getIndex() + 1, null, T_WHITESPACE);
+                    return T_OPEN_PARENTHESIS === $nextToken->getType();
+                 }
+             );
 
         if (null !== $functionName) {
              $this->setContent($functionName);

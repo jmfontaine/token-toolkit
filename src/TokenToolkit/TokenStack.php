@@ -40,12 +40,14 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
      * @var int
      */
     protected $iteratorCursor = 0;
+
     /**
      * Tokenizer used to tokenize source code
      *
      * @var TokenToolkit\Tokenizer\Php
      */
     protected $tokenizer;
+
     /**
      * Array of tokens extracted for the source code
      *
@@ -237,7 +239,7 @@ class TokenStack implements \ArrayAccess, \Countable, \SeekableIterator
         if (0 < count($resultSet)) {
             return $resultSet[0]->getToken();
         } else {
-           return false;
+            return false;
         }
     }
 

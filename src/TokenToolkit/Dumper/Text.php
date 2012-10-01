@@ -67,10 +67,10 @@ EOT;
         $data     = '';
 
         return sprintf(
-                $template,
-                $result->getSearchPattern()->getName(),
-                $filePath,
-                $this->dumpToken($token)
+            $template,
+            $result->getSearchPattern()->getName(),
+            $filePath,
+            $this->dumpToken($token)
         );
     }
 

@@ -55,7 +55,6 @@ class Signature extends AbstractDumper
                 }
                 $suffix = "\033[0m";
                 break;
-
             case self:HTML:
                 if (-1 === $level) {
                     $prefix = '<span style="color:#FFF">';
@@ -68,7 +67,6 @@ class Signature extends AbstractDumper
                 }
                 $suffix = '</span>';
                 break;
-
             default:
                 throw new \RuntimeException("Invalid color mode ($colorMode)");
         }

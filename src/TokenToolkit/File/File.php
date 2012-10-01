@@ -39,8 +39,8 @@ class File
             $handle = fopen($this->path, 'r');
             if (false === $handle) {
                 throw new \InvalidArgumentException(
-                	"File $this->path is not readable"
-            	);
+                    "File $this->path is not readable"
+                );
             }
 
             $firstLine = fgets($handle);

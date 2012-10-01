@@ -5,4 +5,5 @@ ROOT_PATH=$SCRIPT_PATH/..
 phpcs \
     --standard=PSR2 \
     $ROOT_PATH/src \
-    $ROOT_PATH/tests
+    $ROOT_PATH/tests \
+    $ROOT_PATH/autoload.php

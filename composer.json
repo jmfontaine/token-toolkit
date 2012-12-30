@@ -12,7 +12,12 @@
             "homepage": "http://jmfontaine.net/"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "squizlabs/php_codesniffer": "1.*"
     }
 }

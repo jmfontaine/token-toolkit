@@ -1,5 +1,7 @@
 # Token Toolkit
 /docs/*
+/tests/_coverage/*
+/vendor/
 
 # Git
 !.gitkeep

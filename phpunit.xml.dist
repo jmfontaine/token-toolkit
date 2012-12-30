@@ -12,24 +12,21 @@
          syntaxCheck="true">
 
     <testsuites>
-        <testsuite name="Token Toolkit">
+        <testsuite name="Token Toolkit Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     
     <filter>
         <whitelist>
-            <directory suffix=".php">.</directory>
-            <exclude>
-                <directory suffix=".php">./tests</directory>
-            </exclude>
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>    
     
     <logging>
         <log type="coverage-html"
              target="./tests/_coverage"
-             title="Portail"
+             title="Token Toolkit"
              charset="UTF-8"
              yui="true"
              highlight="true"

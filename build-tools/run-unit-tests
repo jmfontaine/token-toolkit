@@ -2,6 +2,7 @@
 SCRIPT_PATH=$(cd ${0%/*}; pwd);
 ROOT_PATH=$SCRIPT_PATH/..
 
-phpunit \
-    --testdox \
-    $ROOT_PATH
+cd $ROOT_PATH
+
+./vendor/bin/phpunit \
+    --testdox

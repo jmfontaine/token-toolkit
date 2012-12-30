@@ -6,4 +6,8 @@
  * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-require_once __DIR__ . '/../autoload.php';
+$rootDir = dirname(__DIR__);
+
+$loader = require __DIR__.'/../vendor/autoload.php';
+$loader->add('TokenToolkit', array($rootDir.'/src/', $rootDir.'/tests/'));
+$loader->register();

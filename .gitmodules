@@ -1,3 +1,0 @@
-[submodule "build-tools/coding-standard/Symfony2"]
-	path = build-tools/coding-standard/Symfony2
-	url = https://github.com/opensky/Symfony2-coding-standard.git

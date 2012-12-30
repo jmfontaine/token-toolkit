@@ -2,11 +2,10 @@
 /**
  * This file is part of the TokenToolkit library.
  *
- * @package   TokenToolkit
+ * @package    TokenToolkit
  * @subpackage Tests
- * @author    Jean-Marc Fontaine <jm@jmfontaine.net>
- * @copyright 2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @copyright  2011-2012 Jean-Marc Fontaine <jm@jmfontaine.net>
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace TokenToolkit\Tests\Search\Pattern;

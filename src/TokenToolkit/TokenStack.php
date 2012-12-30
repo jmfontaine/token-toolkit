@@ -12,7 +12,6 @@ namespace TokenToolkit;
 use TokenToolkit\File\File;
 use TokenToolkit\Search\Pattern\CustomPattern as CustomSearchPattern;
 use TokenToolkit\Search\Query as SearchQuery;
-use TokenToolkit\Token\AbstractToken;
 use TokenToolkit\Token\TokenInterface;
 use TokenToolkit\Tokenizer\Php as PhpTokenizer;
 

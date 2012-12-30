@@ -9,8 +9,6 @@
 
 namespace TokenToolkit\File\Iterator;
 
-use TokenToolkit\File\File;
-
 /**
  * Exclude filter iterator
  *
